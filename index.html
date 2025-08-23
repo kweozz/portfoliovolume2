@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+    <title>Portfolio Ilian Bosserez</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar padding">
+        <div class="nav-logo">
+            <a href="#index.html">
+                <span class="portfolio-title">Portfolio</span>
+                <span class="linenav"></span>
+                <span class="year">2025</span>
+            </a>
+        </div>
+        <button class="burger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="mobile-menu">
+            <li><a href="#cv">Curriculum Vitae</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <!-- scrim behind the panel -->
+        <div class="nav-overlay" aria-hidden="true"></div>
+    </nav>
+
+    <header class="hero">
+        <div class="blobs">
+            <div class="blob blob1"></div>
+            <div class="blob blob2"></div>
+            <div class="blob blob3"></div>
+            <div class="blob blob4"></div>
+        </div>
+        <div class="container">
+            <div class="herotext">
+                <h1>ILIAN BOSSEREZ</h1>
+                <p class="subtitle">Product designer/developer</p>
+            </div>
+            <a href="#contact" class="btn">
+                Hire
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="margin-left:8px">
+                    <path d="M7 17L17 7"></path>
+                    <path d="M7 7h10v10"></path>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="explainer-wrap padding section-space">
+            <h2 class="explainer" id="explainer">
+                I am a Digital Experience Designer with a dual background in UI/UX
+                and frontend development as well as media and marketing strategy.
+                This combination allows me to design digital products that are
+                not only user-friendly, but also aligned with business goals.
+            </h2>
+        </section>
+        <section id="work" class="projects padding ">
+            <div class="newsection section-space">
+                <p>Projects</p>
+                <div class="linebody animate "></div>
+            </div>
+            <section id="work" class="projects">
+                <div class="projects__grid">
+
+                    <!-- A - groot 16:9 links -->
+                    <!-- A — FYNK -->
+                    <article class="card card--a">
+                        <div class="media video-preview" data-thumb="thumbA" data-video="videoA">
+                            <a id="thumbA" class="thumb" href="work.html">
+                                <img src="img/fynkthumb.png" alt="FYNK" loading="lazy">
+                            </a>
+                            <a id="videoA-link" class="video-link" href="work.html">
+                                <video id="videoA" class="preview-video" muted loop playsinline>
+                                    <source src="img/fynkvideo.mp4" type="video/mp4">
+                                </video>
+                            </a>
+                        </div>
+                        <div class="card-tags">
+                            <span>UI/UX</span>
+                            <span>App Development</span>
+                            <span>Concept thinking</span>
+                            <span>Prototyping</span>
+                            <span>Branding</span>
+                        </div>
+                        <div class="meta"><span class="line"></span>
+                            <p>FYNK – social study app</p>
+                        </div>
+                    </article>
+
+                    <!-- B - vierkant rechtsboven -->
+                    <!-- B — Blender Sushi Shop -->
+                    <article class="card card--b">
+                        <div class="media video-preview" data-thumb="thumbB" data-video="videoB">
+                            <a id="thumbB" class="thumb" href="underconstruction.html">
+                                <img src="img/blenderthumb.png" alt="BLENDER SUSHI SHOP">
+                            </a>
+                            <a id="videoB-link" class="video-link" href="underconstruction.html">
+                                <video id="videoB" class="preview-video" muted loop playsinline>
+                                    <source src="img/blendersushi.mp4" type="video/mp4">
+                                </video>
+                            </a>
+                        </div>
+                        <div class="card-tags">
+                            <span>Blender</span>
+                            <span>Modeling</span>
+                            <span>Lighting</span>
+                            <span>Motion design</span>
+                        </div>
+                        <div class="meta"><span class="line"></span>
+                            <p>BLENDER SUSHI SHOP</p>
+                        </div>
+                    </article>
+
+                    <!-- C - 16:10 links midden -->
+                    <!-- C — SWEAR (3D Sneakerstore) -->
+                    <article class="card card--c">
+                        <div class="media video-preview" data-thumb="thumbC" data-video="videoC">
+                            <a id="thumbC" class="thumb" href="underconstruction.html">
+                                <img src="img/swearthumb.png" alt="SNEAKR" loading="lazy">
+                            </a>
+                            <a id="videoC-link" class="video-link" href="underconstruction.html">
+                                <video id="videoC" class="preview-video" muted loop playsinline>
+                                    <source src="img/swearvideo.mp4" type="video/mp4">
+                                </video>
+                            </a>
+                        </div>
+                        <div class="card-tags">
+                            <span>Frontend</span>
+                            <span>Backend</span>
+                            <span>Three.js</span>
+                            <span>Vue.js</span>
+                            <span>Configurator</span>
+                        </div>
+                        <div class="meta"><span class="line"></span>
+                            <p>SWEAR – 3D sneakerstore</p>
+                        </div>
+                    </article>
+
+                    <!-- D - hoge telefoon rechts (2 rijen hoog) -->
+                    <!-- D — RESPIRE -->
+                    <article class="card card--d">
+                        <div class="media video-preview" data-thumb="thumbD" data-video="videoD">
+                            <a id="thumbD" class="thumb" href="underconstruction.html">
+                                <img src="img/RESPIRE.png" alt="RESPIRE" loading="lazy">
+                            </a>
+                            <a id="videoD-link" class="video-link" href="underconstruction.html">
+                                <video id="videoD" class="preview-video" muted loop playsinline>
+                                    <source src="img/respire.mp4" type="video/mp4">
+                                </video>
+                            </a>
+                        </div>
+                        <div class="card-tags">
+                            <span>UI/UX</span>
+                            <span>Visual design</span>
+                            <span>Prototyping</span>
+                            <span>Marketplace</span>
+                        </div>
+                        <div class="meta"><span class="line"></span><p>RESPIRE</p></div>
+                    </article>
+
+                    <!-- E - klein 16:9 links onder -->
+                    <!-- E — HOPPIN -->
+                    <article class="card card--e">
+                        <div class="media video-preview" data-thumb="thumbE" data-video="videoE">
+                            <a id="thumbE" class="thumb" href="underconstruction.html">
+                                <img src="img/hoppinthumb.png" alt="HOPPIN">
+                            </a>
+                            <a id="videoE-link" class="video-link" href="underconstruction.html">
+                                <video id="videoE" class="preview-video" muted loop playsinline>
+                                    <source src="img/hoppin.mp4" type="video/mp4">
+                                </video>
+                            </a>
+                        </div>
+                        <div class="card-tags">
+                            <span>UI/UX</span>
+                            <span>Wireframes</span>
+                            <span>Mobile app</span>
+                            <span>Accessibility</span>
+                        </div>
+                        <div class="meta"><span class="line"></span>
+                            <p>HOPPIN</p>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+    </main>
+</body>
+<!-- link script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+</body>
+
+</html>
