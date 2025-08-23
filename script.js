@@ -204,26 +204,6 @@
     });
   })();
 
-  /* ----- Hero micro-parallax (iOS-ish) ----- */
-  (() => {
-    const h1 = document.querySelector('.herotext h1');
-    const sub = document.querySelector('.herotext .subtitle');
-    const cta = document.querySelector('.btn');
-    if (!h1 || !sub || !cta) return;
-    let tx = 0,
-      ty = 0;
-    window.addEventListener('mousemove', e => {
-      const nx = e.clientX / innerWidth - .5;
-      const ny = e.clientY / innerHeight - .5;
-      tx = nx;
-      ty = ny;
-      h1.style.transform = `translate3d(${tx*6}px, ${ty*4}px, 0)`;
-      sub.style.transform = `translate3d(${tx*10}px, ${ty*6}px, 0)`;
-      cta.style.transform = `translate3d(${tx*14}px, ${ty*8}px, 0)`;
-    }, {
-      passive: true
-    });
-  })();
   /* ----- Subtle breathing on hero background ----- */
   (() => {
     const hero = document.querySelector('.hero');
@@ -284,63 +264,7 @@
     });
   })();
 })();
-// ===== Timeline reveal + progress (Framer/Webflow style) =====
-(() => {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!(window.gsap && window.ScrollTrigger) || prefersReduced) return;
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Animate timeline progress bar
-  const rail = document.querySelector('.timeline__progress');
-  if (rail) {
-    gsap.fromTo(rail, {
-      scaleY: 0
-    }, {
-      scaleY: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.timeline',
-        start: 'top 80%',
-        end: 'bottom 20%',
-        scrub: true
-      },
-      transformOrigin: "top"
-    });
-  }
-
-  // Animate each timeline item
-  const items = gsap.utils.toArray('.tl-item');
-  items.forEach((el, i) => {
-    // Alternate direction on desktop, always left on mobile
-    let fromX = 0;
-    if (window.innerWidth >= 900) {
-      fromX = (i % 2 === 0) ? -60 : 60;
-    } else {
-      fromX = -60;
-    }
-    gsap.fromTo(el, {
-      opacity: 0,
-      y: 40,
-      x: fromX,
-      scale: 0.96,
-      filter: "blur(6px)"
-    }, {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      scale: 1,
-      filter: "blur(0px)",
-      duration: 0.85,
-      ease: "expo.out",
-      scrollTrigger: {
-        trigger: el,
-        start: "top 88%",
-        toggleActions: "play none none reverse"
-      }
-    });
-  });
-})();
 // ===== Projects header line: add .in-view when visible
 (() => {
   const line = document.querySelector('.linebody.about-line');
@@ -383,16 +307,6 @@ ScrollTrigger.create({
       stagger: 0.12, clearProps: "all"
     }, "-=0.4");
 
-  // gentle floating for glass cards (iOS vibe)
-  document.querySelectorAll(".journey .node").forEach((card, i) => {
-    gsap.to(card, {
-      y: "+=8",
-      duration: 2 + Math.random(),
-      repeat: -1, yoyo: true,
-      ease: "sine.inOut",
-      delay: i * 0.08
-    });
-  });
 
   // magnetic icon movement
   const rMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
