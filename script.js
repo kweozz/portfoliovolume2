@@ -353,42 +353,57 @@ ScrollTrigger.create({
     io.observe(line);
   };
 
-  /* ===== Expertise: reveal + card tilt + bg parallax (Matteo-style) ===== */
+ 
+
+
+  /* ===== Expertise parallax (auto-scale so edges never show) ===== */
   (() => {
-    const wrap = document.querySelector('.xp-grid');
-    if (!wrap || !window.gsap) return;
+    if (!window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
 
-    const cards = wrap.querySelectorAll('.xp');
+    function build() {
+      // kill old triggers for hot-reload/resize
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.trigger && t.trigger.classList && t.trigger.classList.contains('xp')) t.kill();
+      });
 
-    // Reveal on scroll
-    gsap.set(cards, { y: 40, opacity: 0 });
-    gsap.to(cards, {
-      y: 0, opacity: 1, duration: 0.9, ease: "expo.out",
-      stagger: 0.16,
-      scrollTrigger: { trigger: wrap, start: "top 78%", once: true }
-    });
+      gsap.utils.toArray('.xp').forEach(card => {
+        const bg = card.querySelector('.xp__bg');
+        if (!bg) return;
 
-    // Scroll parallax for each card's background (via CSS var --bgY)
-    cards.forEach(card => {
-      gsap.fromTo(card.querySelector('.xp__bg'), { '--bgY': '40%' }, {
-        '--bgY': '60%', ease: 'none',
-        scrollTrigger: {
+        // per-card distance in px (override with data-parallax="240")
+        const travel = Number(card.dataset.parallax) || 180;
+
+        // how much to scale so the image still covers at the extremes:
+        // scaleNeeded = (h + 2*travel) / h
+        const h = card.getBoundingClientRect().height || card.offsetHeight;
+        const scaleNeeded = (h + 2 * travel) / h;
+        const scale = scaleNeeded + 0.04; // +4% safety
+
+        gsap.set(bg, { y: -travel, scale, willChange: 'transform' });
+
+        // efficient setter
+        const setY = gsap.quickSetter(bg, 'y', 'px');
+
+        ScrollTrigger.create({
           trigger: card,
           start: 'top bottom',
           end: 'bottom top',
-          scrub: true
-        }
+          scrub: true,
+          onUpdate(self) {
+            // move from -travel to +travel
+            setY(-travel + self.progress * (travel * 2));
+          }
+        });
       });
-    });
 
-    // Subtle tilt on hover (no layout jump)
-    cards.forEach(card => {
-      card.addEventListener('pointermove', e => {
-        const r = card.getBoundingClientRect();
-        const dx = (e.clientX - r.left) / r.width - 0.5;
-        const dy = (e.clientY - r.top)  / r.height - 0.5;
-        card.style.transform = `translateY(-6px) perspective(900px) rotateX(${dy*-5.5}deg) rotateY(${dx*5.5}deg)`;
-      });
-      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-    });
+      ScrollTrigger.refresh();
+    }
+
+    const start = () => build();
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start);
+
+    let t;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 120); });
   })();

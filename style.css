@@ -426,6 +426,8 @@ h1{
   .xp--a { grid-column: 1 / span 6; }
   .xp--b { grid-column: 7 / span 6; }
   .xp--c { grid-column: 1 / span 12; }
+  .xp--a, .xp--b { height:417px; }
+  .xp--c         { height:268px; }
 }
 
 .xp{
@@ -449,9 +451,10 @@ h1{
 .xp__bg {
   position: absolute; inset: 0; z-index: -2;
   background-image: var(--bg);
-  background-size: cover;
-  background-position: 50% var(--bgY,50%);
-  transform: scale(1.06);
+  background-size: cover; background-position: center;
+  transform-origin: center center;
+  will-change: transform;
+  pointer-events: none;
 }
 .xp::after {
   content: "";
