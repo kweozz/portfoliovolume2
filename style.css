@@ -156,8 +156,11 @@ h1{
   z-index:0; /* ensure tags overlay */
 }
 .media img{
-  max-width:100%; height:100%; width:auto;
-  object-fit:contain; border-radius:12px; display:block; background:#f4f4f4;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: auto;
 }
 .media video{
   object-fit: cover;
