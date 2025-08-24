@@ -313,15 +313,27 @@ h1{
 /* Background: per-card marble + parallax */
 .xp__bg {
   position: absolute;
-  inset: -28%; /* Try -28% or even -32% for mobile safety */
+  inset: 0;
   z-index: -2;
-  background-image: var(--bg);
-  background-size: cover;
-  background-position: 50% 50%;
-  transform: translateY(0);
-  will-change: transform;
-  pointer-events: none;
+  overflow: hidden;
 }
+.xp__bg img {
+  position: absolute;
+  inset: -16%;           /* less oversize needed than before */
+  width: 132%;
+  height: 132%;
+  object-fit: cover;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  backface-visibility: hidden;
+  display: block;
+}
+
+/* iOS-specific: keep the texture smaller */
+@supports (-webkit-touch-callout: none) {
+  .xp__bg img { inset: -12%; width: 124%; height: 124%; }
+}
+
 .xp::after {
   content: "";
   position: absolute; inset: 0; z-index: -1;

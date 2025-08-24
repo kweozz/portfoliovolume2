@@ -359,12 +359,37 @@ ScrollTrigger.create({
     if (!wrap || !window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const PARALLAX_MAX = 240;   // absolute cap (px) for the travel
-    const PARALLAX_FRAC = 0.45; // ~45% of card height (Matteo-like)
+    const isiOS = /iP(hone|ad|od)/.test(navigator.userAgent)
+      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-    let triggers = [];
+    const PARALLAX_FRAC = isiOS ? 0.28 : 0.45;
+    const PARALLAX_MAX  = isiOS ? 90   : 220;
 
-    // Only run reveal ONCE, outside build()
+    function build(){
+      ScrollTrigger.getAll().forEach(t => t.trigger?.closest('.xp') && t.kill());
+
+      document.querySelectorAll('.xp').forEach(card => {
+        const img = card.querySelector('.xp__bg img');
+        if (!img) return;
+
+        const h = card.getBoundingClientRect().height || card.offsetHeight;
+        const travel = Math.min(PARALLAX_MAX, h * PARALLAX_FRAC);
+
+        gsap.fromTo(img, { y: -travel }, {
+          y: travel, ease: "none", force3D: true,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+      });
+
+      ScrollTrigger.refresh();
+    }
+
+    // reveal once
     gsap.set('.xp', { y: 40, opacity: 0 });
     gsap.to('.xp', {
       y: 0, opacity: 1, duration: 0.9, ease: "expo.out",
@@ -372,59 +397,14 @@ ScrollTrigger.create({
       scrollTrigger: { trigger: '.xp-grid', start: "top 78%", once: true }
     });
 
-    function build() {
-      // kill previous
-      triggers.forEach(t => t.kill());
-      triggers = [];
-
-      const cards = wrap.querySelectorAll('.xp');
-
-
-      // parallax per card
-      cards.forEach(card => {
-        const bg = card.querySelector('.xp__bg');
-        if (!bg) return;
-
-        const h = card.getBoundingClientRect().height || card.offsetHeight;
-        const travel = Math.min(PARALLAX_MAX, h * PARALLAX_FRAC);
-
-        triggers.push(
-          gsap.fromTo(bg,
-            { y: -travel, force3D: true },
-            {
-              y: travel,
-              ease: "none",
-              force3D: true,
-              scrollTrigger: {
-                trigger: card,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true
-              }
-            }
-          )
-        );
-      });
-
-      ScrollTrigger.refresh();
-    }
-
-    // build once page/fonts are ready
     const start = () => build();
-
     if (document.readyState === "complete") start();
     else window.addEventListener("load", start);
 
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => ScrollTrigger.refresh());
-    }
+    if (document.fonts?.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
 
-    // rebuild on resize (throttled)
-    let t;
-    window.addEventListener("resize", () => {
-      clearTimeout(t);
-      t = setTimeout(build, 120);
-    });
+    let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 120); });
+    window.addEventListener("orientationchange", () => setTimeout(() => ScrollTrigger.refresh(), 100));
   })();
 
 
