@@ -109,7 +109,7 @@ h1{
 .hero::after {
   content: "";
   position: absolute; inset: 0; z-index: 2;
-  background: url('img/marble-hero.jpg') center/cover no-repeat;
+  background: url('img/marble-hero.png') center/cover no-repeat;
   opacity: 0.22;
   mix-blend-mode: multiply;
   pointer-events: none;
@@ -496,6 +496,46 @@ h1{
 }
 .blob4 {
   background: linear-gradient(120deg, #d1f1ff 0%, #f6fefd 60%, #aaffec 100%);
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  width: 100%;
+  padding: 2.5rem 5vw 1.5rem 5vw;
+  border-top: 1px solid #d9dadc;
+  background: #fff;
+  font-size: 1rem;
+  color: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+.footer-linkedin {
+  color: #0077b5;
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: color 0.18s;
+  display: flex;
+  align-items: center;
+}
+.footer-linkedin:hover,
+.footer-linkedin:focus {
+  color: #005983;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  border: 0;
 }
 
 
