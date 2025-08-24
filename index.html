@@ -204,51 +204,170 @@
 
                 </div>
             </section>
-<!-- ===== About / Journey ===== -->
-<section id="about" class="padding section-space">
-  <div class="newsection">
-    <p>About</p>
-    <div class="linebody js-line"></div>
-  </div>
+        </section>
 
-  <div class="journey">
-    <div class="journey__line" aria-hidden="true"></div>
+        <!-- ===== About (centered apps → frosted modals) ===== -->
+        <section id="about" class="padding section-space">
+            <div class="newsection">
+                <p>About</p>
+                <div class="linebody js-animate-line"></div>
+            </div>
 
-    <div class="journey__items">
-      <!-- Education -->
-      <article class="node glass" aria-label="Digital Experience Design">
-        <div class="node__icon"><i class="fa-solid fa-graduation-cap"></i></div>
-        <h4 class="node__title">Digital Experience Design</h4>
-        <p class="node__meta">Thomas More · 2023–2025 · <b>Magna cum laude</b></p>
-      </article>
+            <!-- App icons (responsive, centered) -->
+            <div class="desktop-grid section-space" role="list" aria-label="Experience apps">
+                <!-- Thomas More (both degrees) -->
+                <button class="app-icon" role="listitem"
+                        aria-haspopup="dialog" aria-controls="win-tm"
+                        data-window="win-tm" data-theme="tm" title="Thomas More – Education">
+                  <span class="app-glass"></span>
+                  <img class="app-logo" src="img/thomasmorelogo.png" alt="" />
+                  <span class="app-label">Education</span>
+                </button>
 
-      <article class="node glass" aria-label="Media & Entertainment Business">
-        <div class="node__icon"><i class="fa-solid fa-graduation-cap"></i></div>
-        <h4 class="node__title">Media & Entertainment Business</h4>
-        <p class="node__meta">Thomas More · 2019–2022 · <b>Cum laude</b></p>
-      </article>
+                <!-- Brussels Airlines -->
+                <button class="app-icon" role="listitem"
+                        aria-haspopup="dialog" aria-controls="win-ba"
+                        data-window="win-ba" data-theme="ba" title="Brussels Airlines">
+                  <span class="app-glass"></span>
+                  <img class="app-logo" src="img/brusselsairlines.png" alt="" />
+                  <span class="app-label">Brussels Airlines</span>
+                </button>
 
-      <!-- Experience -->
-      <article class="node glass" aria-label="Brussels Airlines">
-        <div class="node__icon"><i class="fa-solid fa-plane-departure"></i></div>
-        <h4 class="node__title">Marketing (Campaigns & Content)</h4>
-        <p class="node__meta">Brussels Airlines · 2023</p>
-      </article>
+                <!-- Universal Music -->
+                <button class="app-icon" role="listitem"
+                        aria-haspopup="dialog" aria-controls="win-umg"
+                        data-window="win-umg" data-theme="umg" title="Universal Music">
+                  <span class="app-glass"></span>
+                  <img class="app-logo" src="img/umglogo.png" alt="" />
+                  <span class="app-label">Universal Music</span>
+                </button>
 
-      <article class="node glass" aria-label="Universal Music">
-        <div class="node__icon"><i class="fa-solid fa-music"></i></div>
-        <h4 class="node__title">Social & Creative Intern</h4>
-        <p class="node__meta">Universal Music · 2021</p>
-      </article>
+                <!-- We Like You -->
+                <button class="app-icon" role="listitem"
+                        aria-haspopup="dialog" aria-controls="win-wly"
+                        data-window="win-wly" data-theme="wly" title="We Like You">
+                  <span class="app-glass"></span>
+                  <img class="app-logo" src="img/wlylogo.png" alt="welikeyou" />
+                  <span class="app-label">We Like You</span>
+                </button>
+            </div>
+        </section>
 
-      <article class="node glass" aria-label="We Like You">
-        <div class="node__icon"><i class="fa-solid fa-bullhorn"></i></div>
-        <h4 class="node__title">Content & Ads Intern</h4>
-        <p class="node__meta">We Like You · 2021–2022</p>
-      </article>
-    </div>
-  </div>
-</section>
+        <!-- Dim/blur overlay -->
+        <div class="desk-overlay" hidden></div>
+
+        <!-- ===== Windows (centered, glass; themed by data-theme) ===== -->
+
+        <!-- Thomas More (one window with both programs) -->
+        <div id="win-tm" class="desk-window theme-tm" role="dialog" aria-modal="true"
+             aria-labelledby="win-tm-title" hidden>
+          <div class="titlebar">
+            <div class="traffic">
+              <button class="dot dot-close" aria-label="Close"></button>
+              <button class="dot dot-min" aria-label="Minimize" disabled></button>
+              <button class="dot dot-max" aria-label="Zoom" disabled></button>
+            </div>
+            <h2 id="win-tm-title">Thomas More — Education</h2>
+          </div>
+          <div class="win-body">
+            <article class="win-card">
+              <header class="win-card__head">
+                <h3>Digital Experience Design</h3>
+                <span class="pill">2023—2025 • Magna cum laude</span>
+              </header>
+              <ul class="win-list">
+                <li>UI/UX research, prototyping & testing</li>
+                <li>Design systems & component libraries</li>
+                <li>Frontend craft (accessibility & motion)</li>
+              </ul>
+            </article>
+            <article class="win-card">
+              <header class="win-card__head">
+                <h3>Media & Entertainment Business</h3>
+                <span class="pill">2019—2022 • Cum laude</span>
+              </header>
+              <ul class="win-list">
+                <li>Strategy, comms & content</li>
+                <li>Marketing ops & analytics</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- Brussels Airlines -->
+        <div id="win-ba" class="desk-window theme-ba" role="dialog" aria-modal="true"
+             aria-labelledby="win-ba-title" hidden>
+          <div class="titlebar">
+            <div class="traffic">
+              <button class="dot dot-close" aria-label="Close"></button>
+              <button class="dot dot-min" disabled></button>
+              <button class="dot dot-max" disabled></button>
+            </div>
+            <h2 id="win-ba-title">Brussels Airlines — Marketing (Campaigns & Content)</h2>
+          </div>
+          <div class="win-body">
+            <article class="win-card">
+              <header class="win-card__head">
+                <h3>Role Highlights</h3>
+                <span class="pill">2023</span>
+              </header>
+              <ul class="win-list">
+                <li>Campaign asset production & rollout</li>
+                <li>Content ops with brand consistency</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- Universal Music -->
+        <div id="win-umg" class="desk-window theme-umg" role="dialog" aria-modal="true"
+             aria-labelledby="win-umg-title" hidden>
+          <div class="titlebar">
+            <div class="traffic">
+              <button class="dot dot-close" aria-label="Close"></button>
+              <button class="dot dot-min" disabled></button>
+              <button class="dot dot-max" disabled></button>
+            </div>
+            <h2 id="win-umg-title">Universal Music — Social & Creative Intern</h2>
+          </div>
+          <div class="win-body">
+            <article class="win-card">
+              <header class="win-card__head">
+                <h3>Role Highlights</h3>
+                <span class="pill">2021</span>
+              </header>
+              <ul class="win-list">
+                <li>Concepting, motion snippets, content</li>
+                <li>Paid media support & reporting</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- We Like You -->
+        <div id="win-wly" class="desk-window theme-wly" role="dialog" aria-modal="true"
+             aria-labelledby="win-wly-title" hidden>
+          <div class="titlebar">
+            <div class="traffic">
+              <button class="dot dot-close" aria-label="Close"></button>
+              <button class="dot dot-min" disabled></button>
+              <button class="dot dot-max" disabled></button>
+            </div>
+            <h2 id="win-wly-title">We Like You — Content & Ads Intern</h2>
+          </div>
+          <div class="win-body">
+            <article class="win-card">
+              <header class="win-card__head">
+                <h3>Role Highlights</h3>
+                <span class="pill">2021—2022</span>
+              </header>
+              <ul class="win-list">
+                <li>Performance assets & copy iterations</li>
+                <li>Reporting & learnings into next cycles</li>
+              </ul>
+            </article>
+          </div>
+        </div>
 
     </main>
 </body>

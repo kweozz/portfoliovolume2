@@ -590,3 +590,129 @@ h1{
   transition: width .9s cubic-bezier(.7,0,.2,1);
 }
 .linebody.js-line.is-inview::after{ width: 42%; }
+
+/* ===== About: centered app grid ===== */
+.desktop-grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 160px));
+  gap: clamp(18px, 3vw, 28px);
+  justify-content:center;
+  align-items:start;
+
+}
+@media (max-width:1000px){ .desktop-grid{ grid-template-columns: repeat(3, minmax(0, 160px)); } }
+@media (max-width:700px){ .desktop-grid{ grid-template-columns: repeat(2, minmax(0, 150px)); } }
+
+.app-icon{
+  position:relative;
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  padding:16px 12px; border-radius:20px; border:1px solid rgba(0,0,0,.06);
+  background:rgba(255,255,255,.66);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 10px 24px rgba(30,30,60,.08), inset 0 1px 0 rgba(255,255,255,.35);
+  cursor:pointer;
+  transition: transform .24s cubic-bezier(.2,.8,.2,1), box-shadow .24s, border-color .24s;
+  will-change: transform;
+}
+.app-icon:hover{ transform: translateY(-4px); box-shadow: 0 16px 36px rgba(30,30,60,.12); }
+.app-icon:active{ transform: translateY(-1px) scale(.99); }
+
+.app-glass{
+  position:absolute; inset:-1px; border-radius:20px; pointer-events:none;
+  background: radial-gradient(160px 80px at 30% 0%, rgba(255,255,255,.55), transparent 60%),
+              radial-gradient(160px 120px at 70% 120%, rgba(255,255,255,.25), transparent 70%);
+  opacity:.9;
+}
+
+.app-logo{
+  width:64px; height:64px; object-fit:contain; filter: drop-shadow(0 8px 18px rgba(0,0,0,.08));
+}
+.app-label{ font-weight:600; letter-spacing:.01em; color:#202226; }
+
+/* ===== Overlay + Window ===== */
+.desk-overlay{
+  position:fixed; inset:0; z-index:1200;
+  background: rgba(10,12,16,.28);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity:0; transition: opacity .22s ease;
+}
+.desk-overlay.show{ opacity:1; }
+
+.desk-window{
+  position: fixed; inset: 50% auto auto 50%; z-index: 1210;
+  transform: translate(-50%,-50%) scale(.98);
+  width: min(880px, 92vw);
+  max-height: min(78vh, 840px);
+  overflow: hidden;
+  border-radius: 20px;
+  border:1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: 0 20px 60px rgba(20,20,40,.22), inset 0 1px 0 rgba(255,255,255,.45);
+}
+
+/* Titlebar with subtle gradient from theme accent */
+.titlebar{
+  position:relative; display:flex; align-items:center; gap:10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.72));
+}
+.titlebar h2{ font-size:1rem; margin:0; letter-spacing:.01em; }
+
+.traffic{ display:flex; gap:8px; margin-right:6px; }
+.dot{ width:12px; height:12px; border-radius:999px; border:0; cursor:pointer; }
+.dot-close{ background:#ff5f57; }
+.dot-min{ background:#febc2e; }
+.dot-max{ background:#28c840; }
+
+.win-body{
+  padding: 18px 18px 22px;
+  overflow:auto;
+}
+.win-card{
+  border-radius:14px; border:1px solid rgba(0,0,0,.06);
+  background: rgba(255,255,255,.7);
+  padding:16px 16px 14px; margin-bottom:14px;
+  box-shadow: 0 10px 24px rgba(30,30,60,.06), inset 0 1px 0 rgba(255,255,255,.45);
+}
+.win-card__head{ display:flex; gap:10px; align-items:center; justify-content:space-between; }
+.win-card__head h3{ margin:0; font-size:1rem; }
+.pill{
+  font-size:.75rem; padding:.26rem .6rem; border-radius:999px; white-space:nowrap;
+  background: rgba(0,0,0,.06); color:#222;
+}
+
+/* Lists inside window */
+.win-list{ margin:10px 0 0 18px; }
+.win-list li{ margin:6px 0; }
+
+/* ===== Theming (subtle brand shades) ===== */
+.theme-tm{ --accent: #f15a29; } /* Thomas More orange */
+.theme-ba{ --accent: #e2001a; }  /* Brussels Airlines red */
+.theme-umg{ --accent: #111; }    /* Universal black */
+.theme-wly{ --accent: #e7ff00; } /* We Like You neon */
+
+.desk-window.theme-tm .titlebar{ background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, #fff), rgba(255,255,255,.75)); }
+.desk-window.theme-ba .titlebar{ background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 8%, #fff), rgba(255,255,255,.75)); }
+.desk-window.theme-umg .titlebar{ background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 5%, #fff), rgba(255,255,255,.75)); }
+.desk-window.theme-wly .titlebar{ background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, #fff), rgba(255,255,255,.78)); }
+
+.desk-window .pill{ background: color-mix(in srgb, var(--accent) 20%, #fff); color:#111; }
+.desk-window .win-card{ border-color: color-mix(in srgb, var(--accent) 14%, rgba(0,0,0,.08)); }
+
+/* ===== Animated section line (full width) ===== */
+.linebody{ position:relative; height:2px; background:#e7e7ea; border-radius:12px; flex:1; margin-left:1rem; overflow:hidden; }
+.linebody::after{
+  content:""; position:absolute; left:0; top:0; bottom:0;
+  width:0%; background:#1d1d1d; border-radius:12px;
+  transition: width .9s cubic-bezier(.7,0,.2,1);
+}
+.linebody.in-view::after{ width:100%; }
+
+/* Mobile window fit */
+@media (max-width:640px){
+  .desk-window{ width: 94vw; max-height: 80vh; }
+}
