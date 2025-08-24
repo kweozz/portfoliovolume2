@@ -339,24 +339,7 @@ ScrollTrigger.create({
   }
 })();
 
-// ===== Timeline line draw + icon entrance =====
-(function(){
-  const tlSection = document.querySelector('.tline');
-  if (!tlSection || !window.gsap) return;
 
-  // Animate timeline progress and icons
-  gsap.set('.tline__icon', {y: 14, opacity: 0, scale: 0.94});
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: tlSection,
-      start: 'top 75%',
-      once: true
-    }
-  })
-  .to('.tline__progress', {width: '100%', duration: 1, ease: 'power2.out'})
-  .to('.tline__icon', {
-    y: 0, opacity: 1, scale: 1, duration: 0.55, stagger: 0.08, ease: 'power2.out'
-  }, '-=0.6');
 
   // Animate "About" section line if using .js-tl-line
   const aboutLine = document.querySelector('.linebody.js-tl-line');
@@ -375,143 +358,9 @@ ScrollTrigger.create({
     const s = document.createElement('style');
     s.textContent = `.linebody.js-tl-line::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w,0%);background:#1d1d1d;border-radius:12px;}`;
     document.head.appendChild(s);
-  }
-})();
-
-// ===== Modals (open/close, overlay, Esc, focus) =====
-(function(){
-  const overlay = document.querySelector('.tmodal__overlay');
-  const triggers = document.querySelectorAll('.tline__icon[data-modal]');
-  let openModal = null, lastFocus = null;
-
-  function trapFocus(e){
-    if (!openModal) return;
-    const focusables = openModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    if (!focusables.length) return;
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
-    if (e.key === 'Tab'){
-      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-    } else if (e.key === 'Escape'){
-      close();
-    }
-  }
-
-  function open(id){
-    lastFocus = document.activeElement;
-    overlay.hidden = false;
-    requestAnimationFrame(()=> overlay.classList.add('show'));
-    openModal = document.querySelector(id);
-    if (!openModal) return;
-    openModal.hidden = false;
-    requestAnimationFrame(()=> openModal.classList.add('open'));
-    document.body.style.overflow = 'hidden';
-    const focusTarget = openModal.querySelector('.tmodal__close') || openModal;
-    focusTarget.focus();
-    document.addEventListener('keydown', trapFocus);
-  }
-
-  function close(){
-    if (!openModal) return;
-    overlay.classList.remove('show');
-    openModal.classList.remove('open');
-    setTimeout(()=>{
-      overlay.hidden = true;
-      openModal.hidden = true;
-      document.body.style.overflow = '';
-      if (lastFocus) lastFocus.focus();
-      openModal = null;
-    }, 220);
-    document.removeEventListener('keydown', trapFocus);
-  }
-
-  triggers.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const id = btn.getAttribute('data-modal');
-      open(id);
-    });
-  });
-
-  document.addEventListener('click', (e)=>{
-    if (e.target.classList.contains('tmodal__close')) close();
-    if (e.target === overlay) close();
-  });
-})();
-
-document.addEventListener('DOMContentLoaded', () => {
-  // ===== Micro interactions for About apps → windows =====
-  const overlay = document.querySelector('.desk-overlay');
-  const appButtons = document.querySelectorAll('.app-icon');
-  let openWin = null;
-
-  // Center & open with GSAP
-  const openWindow = (win) => {
-    if (!win || openWin === win) return;
-    openWin = win;
-    document.body.classList.add('nav-open'); // lock scroll
-    overlay.hidden = false;
-    win.hidden = false;
-
-    if (window.gsap) {
-      gsap.set(win, { y: 10, opacity: 0, scale: 0.96 });
-      overlay.classList.add('show');
-      gsap.to(win, { duration: .38, y: 0, opacity: 1, scale: 1, ease: 'power3.out' });
-    } else {
-      overlay.classList.add('show');
-      win.style.opacity = 1;
-      win.style.transform = 'none';
-    }
   };
 
-  const closeWindow = () => {
-    if (!openWin) return;
-    if (window.gsap) {
-      gsap.to(openWin, {
-        duration: .22, y: 6, opacity: 0, scale: .98,
-        ease: 'power2.in',
-        onComplete: () => {
-          openWin.hidden = true;
-          openWin = null;
-          overlay.classList.remove('show');
-          document.body.classList.remove('nav-open');
-          setTimeout(() => { overlay.hidden = true; }, 220);
-        }
-      });
-    } else {
-      openWin.hidden = true;
-      openWin = null;
-      overlay.classList.remove('show');
-      document.body.classList.remove('nav-open');
-      overlay.hidden = true;
-    }
-  };
 
-  appButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-window');
-      const win = document.getElementById(id);
-      openWindow(win);
-    });
-
-    // subtle parallax on hover
-    btn.addEventListener('mousemove', (e) => {
-      const r = btn.getBoundingClientRect();
-      const dx = (e.clientX - (r.left + r.width/2)) / r.width;
-      const dy = (e.clientY - (r.top + r.height/2)) / r.height;
-      btn.style.transform = `translateY(-4px) rotateX(${dy * -4}deg) rotateY(${dx * 6}deg)`;
-    });
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = '';
-    });
-  });
-
-  // Close handlers
-  overlay?.addEventListener('click', closeWindow);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeWindow(); });
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('.dot-close')) closeWindow();
-  });
 
   // ===== Animate section line when in view =====
   const line = document.querySelector('.js-animate-line');
@@ -525,5 +374,4 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: .6 });
     io.observe(line);
-  }
-});
+  };
