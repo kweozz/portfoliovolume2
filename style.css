@@ -85,7 +85,7 @@ h1{
   font-size:5rem; line-height:1; margin:0;
 }
 .subtitle{ color:#1D1D1D; margin:0; font-size:1.5rem; font-weight:300; }
-.herotext{ display:flex; flex-direction:column; padding-top:10%; padding-bottom:5%; gap:2.375rem; }
+.herotext{ display:flex; flex-direction:column; padding-top:5%; padding-bottom:10%; gap:2.375rem; }
 .btn{ text-decoration: none; background:#1D1D1D; color:#fff; padding:2rem; border:0; border-radius:4rem; cursor:pointer; font-size:1.5rem; font-weight:300; display:inline-flex; align-items:center; }
 
 .hero{ position:relative; min-height:60vh; padding-inline:5%; padding-block:4rem; overflow:hidden; z-index:0; }
