@@ -158,29 +158,6 @@
     });
   }
 
-  // Section reveal: animate each card in grid as it enters viewport
-  if (window.gsap && window.ScrollTrigger && !prefersReduced) {
-    gsap.utils.toArray('.card').forEach((card, i) => {
-      gsap.set(card, {
-        opacity: 0,
-        y: 32,
-        willChange: "opacity, transform"
-      });
-      gsap.to(card, {
-        opacity: 1,
-        y: 0,
-        duration: 0.55,
-        ease: "power2.out",
-        delay: i * 0.05,
-        scrollTrigger: {
-          trigger: card,
-          start: "top 92%",
-          toggleActions: "play none none reverse"
-        }
-      });
-    });
-  }
-
 
 
   /* ----- Magnetic buttons with shine ----- */
