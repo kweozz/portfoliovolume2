@@ -256,6 +256,44 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* section divider line */
+ScrollTrigger.create({
+  trigger: ".js-line",
+  start: "top 85%",
+  once: true,
+  onEnter: () => document.querySelectorAll(".js-line")
+              .forEach(el => el.classList.add("is-inview"))
+});
+
+/* journey line + cards */
+(() => {
+  const wrap = document.querySelector(".journey");
+  if (!wrap) return;
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: wrap,
+      start: "top 75%",
+      once: true
+    }
+  });
+
+  tl.to(".journey__line", { scaleX: 1, duration: 1.1, ease: "power3.out" })
+    .from(".journey .node", {
+      y: 24, opacity: 0, scale: 0.96, duration: .7, ease: "power3.out",
+      stagger: 0.12, clearProps: "all"
+    }, "-=0.4");
+
+  // gentle floating for glass cards (iOS vibe)
+  document.querySelectorAll(".journey .node").forEach((card, i) => {
+    gsap.to(card, {
+      y: "+=8",
+      duration: 2 + Math.random(),
+      repeat: -1, yoyo: true,
+      ease: "sine.inOut",
+      delay: i * 0.08
+    });
+  });
 
   // magnetic icon movement
   const rMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -276,7 +314,7 @@ gsap.registerPlugin(ScrollTrigger);
       );
     });
   }
-
+})();
 
 
 
@@ -315,57 +353,81 @@ gsap.registerPlugin(ScrollTrigger);
     io.observe(line);
   };
 
- 
-
-
-  /* ===== Expertise parallax (auto-scale so edges never show) ===== */
+  /* ===== Expertise: reveal + stronger bg parallax (Matteo-style) ===== */
   (() => {
-    if (!window.gsap || !window.ScrollTrigger) return;
+    const wrap = document.querySelector('.xp-grid');
+    if (!wrap || !window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    function build() {
-      // kill old triggers for hot-reload/resize
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger && t.trigger.classList && t.trigger.classList.contains('xp')) t.kill();
-      });
+    const PARALLAX_MAX = 240;   // absolute cap (px) for the travel
+    const PARALLAX_FRAC = 0.45; // ~45% of card height (Matteo-like)
 
-      gsap.utils.toArray('.xp').forEach(card => {
+    let triggers = [];
+
+    function build() {
+      // kill previous
+      triggers.forEach(t => t.kill());
+      triggers = [];
+
+      const cards = wrap.querySelectorAll('.xp');
+
+      // reveal
+      gsap.set(cards, { y: 40, opacity: 0 });
+      triggers.push(
+        gsap.to(cards, {
+          y: 0, opacity: 1, duration: 0.9, ease: "expo.out",
+          stagger: 0.16,
+          scrollTrigger: { trigger: wrap, start: "top 78%", once: true }
+        })
+      );
+
+      // parallax per card
+      cards.forEach(card => {
         const bg = card.querySelector('.xp__bg');
         if (!bg) return;
 
-        // per-card distance in px (override with data-parallax="240")
-        const travel = Number(card.dataset.parallax) || 180;
-
-        // how much to scale so the image still covers at the extremes:
-        // scaleNeeded = (h + 2*travel) / h
         const h = card.getBoundingClientRect().height || card.offsetHeight;
-        const scaleNeeded = (h + 2 * travel) / h;
-        const scale = scaleNeeded + 0.04; // +4% safety
+        const travel = Math.min(PARALLAX_MAX, h * PARALLAX_FRAC);
 
-        gsap.set(bg, { y: -travel, scale, willChange: 'transform' });
-
-        // efficient setter
-        const setY = gsap.quickSetter(bg, 'y', 'px');
-
-        ScrollTrigger.create({
-          trigger: card,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-          onUpdate(self) {
-            // move from -travel to +travel
-            setY(-travel + self.progress * (travel * 2));
-          }
-        });
+        triggers.push(
+          gsap.fromTo(bg,
+            { y: -travel, force3D: true },
+            {
+              y: travel,
+              ease: "none",
+              force3D: true,
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+              }
+            }
+          )
+        );
       });
 
       ScrollTrigger.refresh();
     }
 
+    // build once page/fonts are ready
     const start = () => build();
-    if (document.readyState === 'complete') start();
-    else window.addEventListener('load', start);
 
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start);
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => ScrollTrigger.refresh());
+    }
+
+    // rebuild on resize (throttled)
     let t;
-    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 120); });
+    window.addEventListener("resize", () => {
+      clearTimeout(t);
+      t = setTimeout(build, 120);
+    });
   })();
+
+
+
+
