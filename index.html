@@ -271,15 +271,45 @@
         </section>
 
     </main>
-    <footer class="site-footer">
-        <div class="footer-content">
-            <a href="https://www.linkedin.com/in/ilian-bosserez/" target="_blank" rel="noopener" aria-label="LinkedIn"
-                class="footer-linkedin">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-            <span class="footer-copyright">2025 © Ilian Bosserez</span>
-        </div>
-    </footer>
+   <footer id="contact" class="footer padding">
+  <!-- label + line (reuse .newsection / .linebody) -->
+  <div class="newsection">
+    <p>Contact</p>
+    <div class="linebody js-animate-line"></div>
+  </div>
+
+  <!-- main row: giant title + CTA -->
+  <div class="footer__row">
+    <h2 class="footer__title">Let's Work</h2>
+
+    <a class="btn btn--pill footer__cta" href="mailto:il.bosserez@gmail.com">
+      <span class="pill__icon" aria-hidden="true">
+        <!-- arrow up-right in circle -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7"></path>
+          <path d="M7 7h10v10"></path>
+        </svg>
+      </span>
+      <span>Mail me</span>
+    </a>
+  </div>
+
+  <!-- note (avatar + sentence) -->
+  <div class="footer__note">
+    <img class="footer__avatar" src="img/ME.jpg" alt="" loading="lazy" decoding="async" />
+    <p>I'm always up for a chat, send me a message and I'll get back to you asap!</p>
+  </div>
+
+  <!-- thin rule + copyright -->
+  <div class="footer__divider"></div>
+  <div class="footer__copy">
+    <span>2025</span>
+    <span class="dot">•</span>
+    <span>Ilian Bosserez</span>
+  </div>
+</footer>
+
 </body>
 <!-- link script -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
