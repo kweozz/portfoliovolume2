@@ -256,44 +256,6 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* section divider line */
-ScrollTrigger.create({
-  trigger: ".js-line",
-  start: "top 85%",
-  once: true,
-  onEnter: () => document.querySelectorAll(".js-line")
-              .forEach(el => el.classList.add("is-inview"))
-});
-
-/* journey line + cards */
-(() => {
-  const wrap = document.querySelector(".journey");
-  if (!wrap) return;
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: wrap,
-      start: "top 75%",
-      once: true
-    }
-  });
-
-  tl.to(".journey__line", { scaleX: 1, duration: 1.1, ease: "power3.out" })
-    .from(".journey .node", {
-      y: 24, opacity: 0, scale: 0.96, duration: .7, ease: "power3.out",
-      stagger: 0.12, clearProps: "all"
-    }, "-=0.4");
-
-  // gentle floating for glass cards (iOS vibe)
-  document.querySelectorAll(".journey .node").forEach((card, i) => {
-    gsap.to(card, {
-      y: "+=8",
-      duration: 2 + Math.random(),
-      repeat: -1, yoyo: true,
-      ease: "sine.inOut",
-      delay: i * 0.08
-    });
-  });
 
   // magnetic icon movement
   const rMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -314,7 +276,7 @@ ScrollTrigger.create({
       );
     });
   }
-})();
+
 
 
 
