@@ -584,3 +584,13 @@ h1{
 
 
 
+.xp--c .xp__icon {
+  align-self: flex-start;
+}
+
+/* Mobile: center icon for Marketing card */
+@media (max-width: 979px) {
+  .xp--c .xp__icon {
+    align-self: center;
+  }
+}
