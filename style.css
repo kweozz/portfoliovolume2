@@ -2,7 +2,7 @@
    Base & utilities
    ======================= */
 :root{
-  --gap: 44px;                          /* grid gap */
+  --gap: 40px;                          /* grid gap */
   --rowH: clamp(320px, 27vw, 440px);    /* desktop card height */
 }
 
@@ -169,7 +169,7 @@ h1{
   border-radius:12px; display:block; background:#f4f4f4;
 }
 /* captions */
-.meta{ display:flex; flex-direction:column; gap:12px; margin-top:16px; align-items:flex-start; }
+.meta{ display:flex; flex-direction:column; gap:24px; margin-top:32px; align-items:flex-start; }
 .meta .line{ width:100%; height:2px; background:#d9dadc; border-radius:12px; position:relative; }
 .meta .line::after{ content:""; position:absolute; inset:0 auto 0 0; width:0; background:#1D1D1D; border-radius:12px; transition: width .6s cubic-bezier(.7,0,.2,1); }
 .card:hover .meta .line::after{ width:100%; }
