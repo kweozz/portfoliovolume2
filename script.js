@@ -352,3 +352,43 @@ ScrollTrigger.create({
     }, { threshold: .6 });
     io.observe(line);
   };
+
+  /* ===== Expertise: reveal + card tilt + bg parallax (Matteo-style) ===== */
+  (() => {
+    const wrap = document.querySelector('.xp-grid');
+    if (!wrap || !window.gsap) return;
+
+    const cards = wrap.querySelectorAll('.xp');
+
+    // Reveal on scroll
+    gsap.set(cards, { y: 40, opacity: 0 });
+    gsap.to(cards, {
+      y: 0, opacity: 1, duration: 0.9, ease: "expo.out",
+      stagger: 0.16,
+      scrollTrigger: { trigger: wrap, start: "top 78%", once: true }
+    });
+
+    // Scroll parallax for each card's background (via CSS var --bgY)
+    cards.forEach(card => {
+      gsap.fromTo(card.querySelector('.xp__bg'), { '--bgY': '40%' }, {
+        '--bgY': '60%', ease: 'none',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
+
+    // Subtle tilt on hover (no layout jump)
+    cards.forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const dx = (e.clientX - r.left) / r.width - 0.5;
+        const dy = (e.clientY - r.top)  / r.height - 0.5;
+        card.style.transform = `translateY(-6px) perspective(900px) rotateX(${dy*-5.5}deg) rotateY(${dx*5.5}deg)`;
+      });
+      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    });
+  })();
