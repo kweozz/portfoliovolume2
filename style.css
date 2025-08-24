@@ -253,7 +253,7 @@ h1{
 
 /* ---------- Projects label + animated line ---------- */
 .newsection{
-  display:flex; align-items:center; gap:16px; margin-block: 4rem 2rem;
+  display:flex; align-items:center; gap:16px; 
 }
 .newsection p{
   margin:0; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
