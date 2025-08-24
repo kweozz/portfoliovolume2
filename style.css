@@ -313,7 +313,7 @@ h1{
 /* Background: per-card marble + parallax */
 .xp__bg {
   position: absolute;
-  inset: -28%; /* increase from -22% to -28% */
+  inset: -28%; /* Try -28% or even -32% for mobile safety */
   z-index: -2;
   background-image: var(--bg);
   background-size: cover;
