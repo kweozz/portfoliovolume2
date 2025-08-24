@@ -364,6 +364,14 @@ ScrollTrigger.create({
 
     let triggers = [];
 
+    // Only run reveal ONCE, outside build()
+    gsap.set('.xp', { y: 40, opacity: 0 });
+    gsap.to('.xp', {
+      y: 0, opacity: 1, duration: 0.9, ease: "expo.out",
+      stagger: 0.16,
+      scrollTrigger: { trigger: '.xp-grid', start: "top 78%", once: true }
+    });
+
     function build() {
       // kill previous
       triggers.forEach(t => t.kill());
@@ -371,15 +379,6 @@ ScrollTrigger.create({
 
       const cards = wrap.querySelectorAll('.xp');
 
-      // reveal
-      gsap.set(cards, { y: 40, opacity: 0 });
-      triggers.push(
-        gsap.to(cards, {
-          y: 0, opacity: 1, duration: 0.9, ease: "expo.out",
-          stagger: 0.16,
-          scrollTrigger: { trigger: wrap, start: "top 78%", once: true }
-        })
-      );
 
       // parallax per card
       cards.forEach(card => {
