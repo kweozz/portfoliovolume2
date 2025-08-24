@@ -521,8 +521,7 @@ h1{
   padding-top: 8vh; padding-bottom: 4vh;
 }
 .footer .newsection p{ color:#7a7a7a; font-weight:400; letter-spacing:.08em; }
-.footer .linebody{ background:#1c1c1c; }
-.footer .linebody::after{ background:#2a2a2a; }
+
 
 /* main row */
 .footer__row{
@@ -543,7 +542,7 @@ h1{
 /* CTA pill – reuse .btn behaviors */
 .btn--pill{
   display:inline-flex; align-items:center; gap:.85rem;
-  background:#171717; color:#fff; border:1px solid #242424;
+  background:#171717; color:#fff; border:1px solid #1d1d1d;
   padding: clamp(12px,1.6vw,18px) clamp(20px,2.8vw,28px);
   border-radius: 64px;
   font-size: clamp(1rem, 1.1vw, 1.25rem);
@@ -553,7 +552,7 @@ h1{
 .pill__icon{
   display:grid; place-items:center;
   width:42px; height:42px; border-radius:999px;
-  background:#0e0e0e; border:1px solid #272727;
+  background:#0e0e0e; border:1px solid #1d1d1d;
 }
 
 /* note row */
@@ -568,12 +567,6 @@ h1{
   object-fit:cover; border:2px solid #fff1; box-shadow:0 0 0 2px #000;
 }
 
-/* rule + copyright */
-.footer__divider{
-  height:1px; width:100%;
-  background:#2a2a2a;
-  margin-top: clamp(28px, 5vw, 48px);
-}
 .footer__copy{
   display:flex; gap:.65rem; align-items:center; justify-content:flex-end;
   color:#9a9a9a;
