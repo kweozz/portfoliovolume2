@@ -319,9 +319,9 @@ h1{
 }
 .xp__bg img {
   position: absolute;
-  inset: -32%;
-  width: 164%;
-  height: 164%;
+  inset: -48%;      /* was -32%, increase to -48% for more coverage */
+  width: 196%;      /* was 164%, increase to match inset */
+  height: 196%;
   object-fit: cover;
   transform: translate3d(0,0,0);
   will-change: transform;
@@ -329,9 +329,9 @@ h1{
   display: block;
 }
 
-/* iOS-specific: keep the texture smaller */
+/* iOS-specific: keep the texture smaller for performance */
 @supports (-webkit-touch-callout: none) {
-  .xp__bg img { inset: -16%; width: 132%; height: 132%; }
+  .xp__bg img { inset: -24%; width: 148%; height: 148%; }
 }
 
 .xp::after {
