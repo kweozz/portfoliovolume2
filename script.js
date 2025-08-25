@@ -362,8 +362,8 @@ ScrollTrigger.create({
     const isiOS = /iP(hone|ad|od)/.test(navigator.userAgent)
       || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-    const PARALLAX_FRAC = isiOS ? 0.28 : 0.6;   // was 0.45
-    const PARALLAX_MAX  = isiOS ? 90   : 320;   // was 220
+    const PARALLAX_FRAC = isiOS ? 0.28 : 0.85;   // increase from 0.6 to 0.85
+    const PARALLAX_MAX  = isiOS ? 90   : 420;    // increase from 320 to 420
 
     function build(){
       ScrollTrigger.getAll().forEach(t => t.trigger?.closest('.xp') && t.kill());
