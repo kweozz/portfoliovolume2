@@ -121,16 +121,16 @@ h1{
   100%{background-position:80% 80%,20% 90%,60% 20%,90% 60%; transform:rotate(-2deg) scale(1.01);}
 }
 
-.explainer-wrap{ display:flex; align-items:center; padding:10vh 5vw; }
+.explainer-wrap{ display:flex; align-items:center; padding:5vh 5vw; }
 .explainer{ font-size:clamp(2rem,5vw,3rem); font-weight:350; line-height:1.5; }
 .explainer .word{ display:inline-block; color:#cfcfcf; transform:translateY(.5em); opacity:.3; }
 
 .blobs{ position:absolute; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none; overflow:visible; }
 .blob{ position:absolute; border-radius:50%; filter:blur(36px) saturate(1.5); opacity:.75; mix-blend-mode:lighten; transition:opacity .3s; }
-.blob1{ width:52vw; height:48vw; min-width:340px; min-height:320px; background:linear-gradient(120deg,#7fdcff 0%,#b8eaff 60%,#e0f7fa 100%); left:-18vw; top:-20vw; animation:blob1move 6s infinite alternate cubic-bezier(.6,0,.4,1); }
-.blob2{ width:38vw; height:44vw; min-width:240px; min-height:270px; background:linear-gradient(120deg,#aaffec 0%,#e0ffe7 80%,#e0f2fe 100%); right:-20vw; top:-8vw; animation:blob2move 7s infinite alternate cubic-bezier(.6,0,.4,1); }
+.blob1{ width:52vw; height:48vw; min-width:340px; min-height:320px; background:linear-gradient(120deg,#80dbff 0%,#b8eaff 60%,#e0f7fa 100%); left:-18vw; top:-20vw; animation:blob1move 6s infinite alternate cubic-bezier(.6,0,.4,1); }
+.blob2{ width:38vw; height:44vw; min-width:240px; min-height:270px; background:linear-gradient(120deg,#aaffec 0%,#e0ffe7 80%,#c6e8ff 100%); right:-20vw; top:-8vw; animation:blob2move 7s infinite alternate cubic-bezier(.6,0,.4,1); }
 .blob3{ width:36vw; height:30vw; min-width:220px; min-height:180px; background:linear-gradient(120deg,#e3f6fd 0%,#f4fafe 80%,#b8eaff 100%); left:16vw; bottom:-16vw; animation:blob3move 6.5s infinite alternate cubic-bezier(.6,0,.4,1); }
-.blob4{ width:30vw; height:36vw; min-width:170px; min-height:200px; background:linear-gradient(120deg,#d1f1ff 0%,#f6fefd 60%,#aaffec 100%); right:10vw; bottom:-14vw; animation:blob4move 8s infinite alternate cubic-bezier(.6,0,.4,1); }
+.blob4{ width:30vw; height:36vw; min-width:170px; min-height:200px; background:linear-gradient(120deg,#d1f1ff 0%,#dbfffb 60%,#87d8c5 100%); right:10vw; bottom:-14vw; animation:blob4move 8s infinite alternate cubic-bezier(.6,0,.4,1); }
 @keyframes blob1move{ 0%{transform:translate(0,0) scale(1) rotate(0);} 100%{transform:translate(22vw,14vw) scale(1.2,.85) rotate(8deg);} }
 @keyframes blob2move{ 0%{transform:translate(0,0) scale(1) rotate(0);} 100%{transform:translate(-20vw,20vw) scale(1.22,1.05) rotate(12deg);} }
 @keyframes blob3move{ 0%{transform:translate(0,0) scale(1) rotate(0);} 100%{transform:translate(18vw,-18vw) scale(1.18,.9) rotate(10deg);} }
@@ -234,46 +234,6 @@ h1{
 }
 .linebody.is-drawn::after{ width:100%; }
 
-/* ---------- Button micro-interactions (hover/press/magnetic-ready) ---------- */
-.btn{
-  --tx:0px; --ty:0px;
-  position:relative; overflow:hidden;
-  transform: translate(var(--tx), var(--ty));
-  transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s;
-  will-change: transform;
-}
-.btn svg{ transition: transform .28s cubic-bezier(.2,.8,.2,1); }
-.btn::after{
-  content:""; position:absolute; inset:-2px; border-radius:inherit;
-  background: radial-gradient(120px 120px at var(--mx,50%) var(--my,50%), rgba(255,255,255,.22), transparent 60%);
-  opacity:0; transition: opacity .25s;
-}
-.btn:hover{
-  transform: translate(var(--tx), var(--ty)) translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 28px rgba(30,30,60,.12);
-}
-.btn:hover svg{ transform: translateX(6px); }
-.btn:hover::after{ opacity:1; }
-.btn:active{ transform: translate(var(--tx), var(--ty)) scale(.98); }
-.btn:focus-visible{
-  outline:none; box-shadow: 0 0 0 3px rgba(80,120,255,.35);
-}
-
-
-/* === Micro-interactions for the Hire button === */
-.btn{
-  position:relative; overflow:hidden; transform:translateZ(0);
-  box-shadow:0 10px 24px rgba(0,0,0,.08);
-  transition:transform .18s ease, box-shadow .18s ease;
-}
-.btn::after{
-  content:""; position:absolute; inset:0; background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.35) 40%,transparent 80%);
-  transform:translateX(-120%); transition:transform .6s cubic-bezier(.7,0,.2,1);
-}
-.btn:hover{ transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,.12); }
-.btn:hover::after{ transform:translateX(120%); }
-.btn:active{ transform:translateY(0) scale(.98); box-shadow:0 8px 18px rgba(0,0,0,.10); }
-
 
 
 .xp-grid{
@@ -338,6 +298,7 @@ h1{
   content: "";
   position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg,rgba(2,6,23,.62),rgba(2,6,23,.36) 38%,rgba(2,6,23,.68));
+  border-radius: inherit; /* <-- Add this line */
 }
 .xp[data-tone="light"] {
   color: #1D1D1D;
@@ -384,7 +345,7 @@ h1{
 
 /* Tags — pill size from Figma */
 .xp__tags {
-  display: flex;
+  display: inline-block;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
@@ -625,6 +586,12 @@ h1 {
   overflow: hidden;
   z-index: 0;
 }
+.hero .container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.2rem, 4vw, 2.375rem);
+}
 
 /* Responsive .footer__title */
 .footer__title {
@@ -695,3 +662,61 @@ h1 {
 .xp__body {
   max-width: min(100%, 440px);
 }
+
+/* ==========================
+   Awwwards polish — additions
+   ========================== */
+
+/* 2.1 — Page transition curtain */
+.page-transition{
+  position: fixed; inset: 0; z-index: 2000;
+  background: linear-gradient(180deg,#fff 0%, #f7f8fb 100%);
+  transform: translateY(0%);
+  pointer-events: none;
+}
+
+/* 2.2 — Top scroll progress bar */
+.scroll-progress{
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1900;
+  background: linear-gradient(90deg,#111,#222,#111);
+  transform: scaleX(0); transform-origin: left center;
+}
+
+/* 2.3 — Desktop nav underline follower */
+.nav-underline{
+  position: absolute; bottom: 12px;
+  height: 2px; border-radius: 999px; left: 5%; width: 0px;
+  background: currentColor; opacity: .22; transition: opacity .25s ease;
+  pointer-events: none;
+}
+@media (max-width:800px){ .nav-underline{ display:none; } }
+
+/* 2.4 — Nav link polish */
+.nav-links a{
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav-links a::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:2px; border-radius:999px;
+  background: currentColor; transform: scaleX(0); transform-origin: left center;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  opacity:.35;
+}
+.nav-links a:hover::after, .nav-links a:focus-visible::after{ transform: scaleX(1); }
+
+/* Active state (JS toggles .is-active) */
+.nav-links a.is-active{ color:#000; }
+
+/* 2.5 — Hero headline characters (for per-letter GSAP) */
+.hero h1 .char{ display:inline-block; will-change: transform, opacity; }
+
+/* 2.6 — Section reveal helpers (clip-path wipe) */
+[data-reveal]{
+  will-change: clip-path, transform, opacity;
+}
+
+/* 2.7 — Slightly stronger hero parallax presence on large screens */
+@media (min-width: 981px){
+  .hero{ perspective: 900px; }
+}
+

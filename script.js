@@ -45,15 +45,15 @@
     }
   }
 
-  /* ---------- Hero blobs: parallax on wrapper (no accumulation) ---------- */
+  /* ---------- Hero blobs: parallax on wrapper (more noticeable motion) ---------- */
   const blobsWrap = document.querySelector('.blobs');
   if (blobsWrap && !prefersReduced) {
     let tx = 0,
       ty = 0,
       targetX = 0,
       targetY = 0;
-    const damp = 0.08,
-      strength = 18;
+    const damp = 0.12,         // less damping for snappier motion
+      strength = 60;       // much stronger for more visible movement
 
     function loop() {
       tx += (targetX - tx) * damp;
@@ -394,7 +394,11 @@ ScrollTrigger.create({
     gsap.to('.xp', {
       y: 0, opacity: 1, duration: 0.9, ease: "expo.out",
       stagger: 0.16,
-      scrollTrigger: { trigger: '.xp-grid', start: "top 78%", once: true }
+      scrollTrigger: {
+        trigger: '.xp-grid',
+        start: "top 78%",
+        toggleActions: "play reverse play reverse" // animate in/out
+      }
     });
 
     const start = () => build();
@@ -406,7 +410,147 @@ ScrollTrigger.create({
     let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 120); });
     window.addEventListener("orientationchange", () => setTimeout(() => ScrollTrigger.refresh(), 100));
   })();
+/* =========================================================
+script.js — awwwards polish (keeps your existing logic)
+========================================================= */
+(() => {
+  'use strict';
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================
+     0) Page transition in
+     ===================== */
+  const curtain = document.querySelector('.page-transition');
+  if (curtain && window.gsap && !prefersReduced) {
+    gsap.set(curtain, { yPercent: 0 });
+    window.addEventListener('load', () => {
+      gsap.to(curtain, { yPercent: -100, duration: 0.9, ease: 'power2.inOut', delay: 0.05, onComplete(){
+        curtain.style.display = 'none';
+      }});
+    });
+  }
+
+  /* =====================================
+     1) Explainer — auto span + reveal (kept)
+     ===================================== */
+  const explainerEl = document.getElementById('explainer');
+  if (explainerEl) {
+    const txt = explainerEl.textContent.trim().replace(/\s+/g, ' ');
+    explainerEl.innerHTML = txt.split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
+
+    if (window.gsap && window.ScrollTrigger && !prefersReduced) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.set('.explainer .word', {
+        color: '#cfcfcf', y: '0.5em', opacity: 0.35, filter: 'blur(0.6px)', scale: 0.96
+      });
+      gsap.to('.explainer .word', {
+        color: '#1d1d1d', y: 0, opacity: 1, filter: 'blur(0px)', scale: 1,
+        stagger: { each: 0.035, from: 'start' }, ease: 'expo.out', duration: 1.2,
+        scrollTrigger: { trigger: explainerEl, start: 'top 80%', toggleActions: 'play none none reverse', once: false }
+      });
+    } else {
+      explainerEl.querySelectorAll('.word').forEach(w => w.style.color = '#1d1d1d');
+    }
+  }
+
+  /* ==========================================
+     2) Hero — parallax + letter & subtitle intro
+     ========================================== */
+  const blobsWrap = document.querySelector('.blobs');
+  if (blobsWrap && !prefersReduced) {
+    let tx = 0, ty = 0, targetX = 0, targetY = 0;
+    const damp = 0.085, strength = 26; // stronger than 18 so it’s noticeable
+    function loop(){ tx += (targetX - tx) * damp; ty += (targetY - ty) * damp; blobsWrap.style.transform = `translate(${tx}px,${ty}px)`; requestAnimationFrame(loop); }
+    window.addEventListener('mousemove', e => {
+      const nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
+      targetX = nx * strength; targetY = ny * strength;
+    }, { passive: true });
+    loop();
+  }
 
 
+
+})();
+
+// Enhanced GSAP page load and section animations
+(() => {
+  if (!window.gsap || !window.ScrollTrigger) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero headline split animation
+  const heroTitle = document.querySelector('.herotext h1');
+  if (heroTitle) {
+    // Split text into spans per letter
+    heroTitle.innerHTML = heroTitle.textContent.split('').map(char =>
+      `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+    gsap.set(heroTitle.querySelectorAll('.char'), { y: 80, opacity: 0, rotate: 8, scale: 1.2 });
+  }
+
+  // Timeline for initial load
+  const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+  tl.to(".navbar", { opacity: 1, y: 0, duration: 0.7 })
+    .to(".hero", { opacity: 1, y: 0, duration: 0.9 }, "-=0.5")
+    .to(".herotext h1 .char", {
+      y: 0,
+      opacity: 1,
+      rotate: 0,
+      scale: 1,
+      stagger: { each: 0.035, from: "start" },
+      duration: 1.1
+    }, "-=0.7")
+    .from(".herotext .subtitle", {
+      opacity: 0,
+      y: 40,
+      duration: 0.7
+    }, "-=0.8")
+    .from(".btn--pill", {
+      opacity: 0,
+      y: 40,
+      duration: 0.7
+    }, "-=0.6")
+    .to(".explainer-wrap", { opacity: 1, y: 0, duration: 0.9 }, "-=0.4")
+    .to(".projects__grid", { opacity: 1, y: 0, duration: 1 }, "-=0.7");
+
+
+
+  // Enhanced projects grid animation
+  gsap.from(".projects__grid .card", {
+    opacity: 0,
+    y: 80,
+    rotate: 6,
+    scale: 0.96,
+    duration: 1.2,
+    stagger: {
+      each: 0.13,
+      from: "start"
+    },
+    ease: "expo.out",
+    scrollTrigger: {
+      trigger: ".projects__grid",
+      start: "top 85%",
+      toggleActions: "play reverse play reverse"
+    }
+  });
+
+
+  // Animate footer CTA and note
+  gsap.from(".footer__row, .footer__note, .footer__copy", {
+    opacity: 0,
+    y: 60,
+    duration: 1,
+    stagger: 0.18,
+    ease: "expo.out",
+    scrollTrigger: {
+      trigger: ".footer",
+      start: "top 90%",
+      toggleActions: "play none none reverse"
+    }
+  });
+})();
 
 
