@@ -45,15 +45,28 @@
     }
   }
 
-  /* ---------- Hero blobs: parallax on wrapper (more noticeable motion) ---------- */
+  /* ---------- Hero blobs: parallax on wrapper (much more noticeable + animated in) ---------- */
   const blobsWrap = document.querySelector('.blobs');
   if (blobsWrap && !prefersReduced) {
+    // Animate blobs in on load
+    gsap.set('.blob', { scale: 0.7, opacity: 0, y: 60 });
+    gsap.to('.blob', {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      ease: "expo.out",
+      stagger: 0.08,
+      delay: 0.1
+    });
+
+    // Stronger, snappier parallax
     let tx = 0,
       ty = 0,
       targetX = 0,
       targetY = 0;
-    const damp = 0.12,         // less damping for snappier motion
-      strength = 60;       // much stronger for more visible movement
+    const damp = 0.18,         // less damping for snappier motion
+      strength = 120;      // much stronger for more visible movement
 
     function loop() {
       tx += (targetX - tx) * damp;
@@ -70,6 +83,19 @@
       passive: true
     });
     loop();
+
+    // Subtle floating for each blob (always moving)
+    document.querySelectorAll('.blob').forEach((blob, i) => {
+      gsap.to(blob, {
+        y: `+=${18 + i * 8}`,
+        x: `+=${12 - i * 6}`,
+        duration: 3.5 + i,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: i * 0.2
+      });
+    });
   }
 
   /* ---------- Projects: hover video (desktop) / tap to open (mobile) ---------- */
@@ -552,5 +578,21 @@ script.js — awwwards polish (keeps your existing logic)
     }
   });
 })();
+
+// Animate about-photo: slide in from left with GSAP
+if (window.gsap && window.ScrollTrigger) {
+  gsap.set('.about-photo', { x: -80, opacity: 0 });
+  gsap.to('.about-photo', {
+    x: 0,
+    opacity: 1,
+    duration: 1.1,
+    ease: "expo.out",
+    scrollTrigger: {
+      trigger: '.explainer-wrap',
+      start: "top 85%",
+      toggleActions: "play reverse play reverse"
+    }
+  });
+}
 
 
