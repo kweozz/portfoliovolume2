@@ -184,6 +184,28 @@
     });
   }
 
+  if (window.gsap && document.body.classList.contains('case-page')) {
+    gsap.set([
+      ".navbar",
+      ".case-hero",
+      ".explainer-wrap",
+      ".case-info",
+      ".olc",
+      ".enjoy-more",
+      ".footer"
+    ], { opacity: 0, y: 80 });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      gsap.to(".navbar", { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" });
+      gsap.to(".case-hero", { opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "expo.out" });
+      gsap.to(".explainer-wrap", { opacity: 1, y: 0, duration: 0.9, delay: 0.2, ease: "expo.out" });
+      gsap.to(".case-info", { opacity: 1, y: 0, duration: 0.9, delay: 0.3, ease: "expo.out" });
+      gsap.to(".olc", { opacity: 1, y: 0, duration: 0.9, delay: 0.4, ease: "expo.out" });
+      gsap.to(".enjoy-more", { opacity: 1, y: 0, duration: 0.9, delay: 0.5, ease: "expo.out" });
+      gsap.to(".footer", { opacity: 1, y: 0, duration: 0.9, delay: 0.6, ease: "expo.out" });
+    });
+  }
+
 
 
   /* ----- Magnetic buttons with shine ----- */
