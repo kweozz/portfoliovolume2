@@ -679,3 +679,67 @@ if (window.gsap && window.ScrollTrigger) {
   window.addEventListener('resize', () => { measure(); render(); });
 
 })();
+
+/* ===== Smooth Olivier-style Cards Parallax ===== */
+(function cardsParallaxSmooth(){
+  const section = document.querySelector('[data-olc-cards]');
+  if (!section) return;
+
+  const main   = section.querySelector('.olc__main');
+  const cards  = Array.from(section.querySelectorAll('.olc__card'));
+  const N      = cards.length;
+  if (!N) return;
+
+  // Stack offsets and z-index (later cards sit above earlier ones)
+  cards.forEach((card, i) => {
+    card.style.setProperty('--offset', `${i * 25}px`);
+    card.style.zIndex = String(100 + i);
+  });
+
+  // Track progress for the WHOLE section (0..1)
+  let start = 0, end = 1;
+  function measure(){
+    const r = main.getBoundingClientRect();
+    const y = window.scrollY || window.pageYOffset;
+    start = r.top + y;
+    end   = start + main.offsetHeight - window.innerHeight;
+  }
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+  const map = (v, inA, inB, outA, outB) => {
+    const t = clamp01((v - inA) / Math.max(1e-6, (inB - inA)));
+    return outA + (outB - outA) * t;
+  };
+
+  // Smooth progress lerping
+  let targetProgress = 0, smoothProgress = 0;
+  function render(){
+    const y = window.scrollY || window.pageYOffset;
+    targetProgress = clamp01((y - start) / Math.max(1, (end - start)));  // 0..1
+
+    // Lerp for smoothness
+    smoothProgress += (targetProgress - smoothProgress) * 0.13;
+
+    cards.forEach((card, i) => {
+      const targetScale = 1 - ((N - i) * 0.05);
+      const rangeStart  = i / N;
+      const s = (smoothProgress <= rangeStart)
+        ? 1
+        : map(smoothProgress, rangeStart, 1, 1, targetScale);
+
+      // Optional: fade out cards as they shrink
+      const fade = (s < 0.92) ? map(s, targetScale, 0.92, 0, 1) : 1;
+
+      card.style.transform = `scale(${s.toFixed(4)})`;
+      card.style.opacity = fade;
+    });
+
+    requestAnimationFrame(render);
+  }
+
+  // setup & listeners
+  const setup = () => { measure(); };
+  setup();
+  window.addEventListener('resize', setup);
+
+  render();
+})();
