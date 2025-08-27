@@ -1,0 +1,191 @@
+/* ---- Case hero (Figma-alike) ---- */
+.case-hero__media {
+  position: relative;
+  height: clamp(400px, 70vh, 680px);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.case{
+
+    width: 100%;
+
+}
+.case-hero__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+    object-fit: cover;
+  object-position: center;
+  filter: brightness(.72) saturate(.98);
+  transition: transform .8s cubic-bezier(.2,.9,.2,1), filter .5s;
+  transform-origin: center;
+}
+
+.case-hero__media:hover img {
+  transform: scale(1.04);
+  filter: brightness(.8);
+}
+
+/* center the text over image */
+.case-hero__caption {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  pointer-events: none;
+}
+
+.case-hero__caption h1 {
+  margin: 0;
+  color: #fff;
+  font-weight: 300;
+  line-height: .95;
+  font-size: clamp(3.2rem, 10.5vw, 7.6rem);
+  letter-spacing: -0.03em;
+  text-shadow: 0 20px 46px rgba(0,0,0,.6);
+  max-width: 90%;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.case-hero__caption h1 .soft-break {
+  display: block;
+}
+
+.case-hero__caption .subtitle {
+  margin-top: .6rem;
+  color: rgba(255,255,255,.95);
+  font-size: clamp(.95rem, 2.2vw, 1.25rem);
+  font-weight: 300;
+}
+
+/* mobile adjustments */
+@media (max-width: 640px) {
+  .case-hero__media { height: clamp(280px, 45vh, 420px); }
+  .case-hero__caption { padding: 6vh 5vw; }
+  .case-hero__caption h1 {
+    font-size: clamp(2rem, 12vw, 4.8rem);
+    line-height: 1;
+  }
+}
+
+/* Explainer CTA buttons (vertical on mobile, horizontal on desktop) */
+.explainer-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 3vw;
+  justify-content: center;
+}
+@media (min-width: 700px) {
+  .explainer-wrap {
+    flex-direction: row;
+    align-items: center;
+    gap: 4vw;
+  }
+  .explainer-cta {
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-left: 4vw;
+    margin-top: 0;
+  }
+}
+
+/* Outline style for Figma button */
+.btn--outline {
+  background: #fff;
+  color: #1D1D1D;
+  border: 2px solid #1D1D1D;
+  box-shadow: none;
+}
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  background: #1D1D1D;
+  color: #fff;
+  border-color: #1D1D1D;
+}
+
+/* Info grid */
+.case-info {
+  margin-top: 4vw;
+  margin-bottom: 4vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vw;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+}
+.case-info__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2vw;
+  border-bottom: 1px solid #ececec;
+  padding: 1.2vw 0;
+}
+.case-info__row:last-child {
+  border-bottom: none;
+}
+.case-info__label {
+  min-width: 120px;
+  color: #818489;
+  font-size: .92rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  flex: 0 0 140px;
+}
+.case-info__value {
+  color: #222;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  font-weight: 400;
+  flex: 1 1 0;
+}
+.case-info__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em;
+}
+.case-info__tags span {
+  display: inline-block;
+  background: #1D1D1D;
+  color: #fff;
+  border-radius: 999px;
+  padding: .45em 1.2em;
+  font-size: .98rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.case-parallax-stack {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 8vw auto 10vw auto;
+  min-height: 80vh;
+}
+.parallax-card {
+  position: absolute;
+  left: 0; right: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 16/10;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(30,30,60,0.10);
+  background: #fff;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+.parallax-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+

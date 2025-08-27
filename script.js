@@ -596,3 +596,23 @@ if (window.gsap && window.ScrollTrigger) {
 }
 
 
+// ---- Work page micro-parallax (reuses GSAP + ScrollTrigger) ----
+(() => {
+  if (!window.gsap || !window.ScrollTrigger) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  gsap.utils.toArray('.case [data-parallax]').forEach(el => {
+    const travel = parseFloat(el.getAttribute('data-parallax')) || 20;
+    gsap.fromTo(el, { y: -travel }, {
+      y: travel,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  });
+})();
