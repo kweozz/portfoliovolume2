@@ -346,9 +346,9 @@ h1{
 
 /* Tags — pill size from Figma */
 .xp__tags {
-  display: inline-block;
+  display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 14px; /* was 8px of kleiner, nu meer ruimte */
   margin-top: 10px;
 }
 .xp__tags span {
