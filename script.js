@@ -704,3 +704,8 @@ if (window.gsap && window.ScrollTrigger) {
 
   render();
 })();
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    document.getElementById('site-loader')?.classList.add('hide');
+  }, 400); // adjust delay if you want
+});
