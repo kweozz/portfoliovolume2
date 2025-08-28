@@ -832,3 +832,44 @@ h1 {
   100% { transform: rotate(360deg);}
 }
 
+/* Responsive footer layout */
+@media (max-width: 900px) {
+  .footer__row {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-block: 3rem;
+    text-align: left;
+  }
+  .footer__cta {
+    justify-self: start;
+    margin-top: 1.5rem;
+  }
+  .footer__title {
+    font-size: 2.2rem;
+  }
+  .footer__note {
+    justify-content: flex-start;
+    font-size: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer__copy {
+    justify-content: flex-start;
+    font-size: .95rem;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+}
+
+/* Zorg dat de LinkedIn knop niet over content heen valt op mobiel */
+@media (max-width: 700px) {
+  .footer-linkedin {
+    position: static;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    left: unset;
+    bottom: unset;
+    display: inline-flex;
+  }
+}
+

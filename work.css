@@ -215,17 +215,17 @@
   transform-origin: center top;
   will-change: transform;
 }
-.olc__card img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.olc__card img,
 .olc__card video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  margin: 0 auto;
+  background: #f4f4f4;
+  border-radius: 24px;
+  box-shadow: none;
+  padding: 0;
 }
 @media (prefers-reduced-motion: reduce){
   .olc__card { top: auto; position: relative; height: auto; }
@@ -265,6 +265,21 @@
     width: 38px;
     height: 38px;
     font-size: 1.1rem;
+  }
+  .olc__card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 18px;
+    box-sizing: border-box;
+  }
+  .olc__card img,
+  .olc__card video {
+    border-radius: 18px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #f4f4f4;
   }
 }
 .enjoy-more {
