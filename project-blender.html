@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blender Sushi Kiosk — Case</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Your main stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Case / project styles -->
+    <link rel="stylesheet" href="work.css" />
+</head>
+
+<body class="case-page">
+    <!-- Top progress (already in your site – optional) -->
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Reuse your navbar -->
+    <nav class="navbar padding ">
+        <div class="nav-logo">
+            <a href="index.html">
+                <span class="portfolio-title">Portfolio</span>
+                <span class="linenav"></span>
+                <span class="year">2025</span>
+            </a>
+        </div>
+        <button class="burger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="mobile-menu">
+            <li><button class="close-menu" aria-label="Close menu">&times;</button></li>
+            <li><a href="IlianBosserezCurriculumVitaeFinal.pdf" target="_blank" rel="noopener">Curriculum Vitae</a></li>
+            <li><a href="index.html#work">Work</a></li>
+            <li><a href="index.html#expertise">Expertise</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-overlay" aria-hidden="true"></div>
+    </nav>
+    <!-- Navigation buttons -->
+    <section class="case-nav padding">
+        <a class="btn btn--icon case-nav__back" href="index.html" aria-label="Back to overview">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+    </section>
+    <!-- HERO -->
+    <header class="case-hero">
+        <div class="case padding">
+            <figure class="case-hero__media">
+                <img src="img/blender-2.png" alt="Blender Sushi Kiosk hero" loading="eager" />
+                <figcaption class="case-hero__caption">
+                    <h1>Blender Sushi Kiosk</h1>
+                    <p class="subtitle">Digitale streetfood kiosk — 3D design & branding</p>
+                </figcaption>
+            </figure>
+        </div>
+    </header>
+
+    <main>
+        <!-- Explainer (same class as homepage) -->
+        <section class="explainer-wrap padding">
+            <div class="explainer" id="explainer">
+                For this project, I designed and modeled a digital streetfood kiosk in Blender, centered around sushi.
+                The goal:
+                create a visually striking, interactive kiosk that not only promotes the streetfood item, but also
+                brings the story
+                and atmosphere of Japanese streetfood culture to life.
+
+            </div>
+            <div class="explainer-cta">
+                <a class="btn btn--pill" href="https://github.com/yourrepo" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-github"></i>
+                    Code
+                </a>
+                <a class="btn btn--pill btn--outline" href="https://figma.com/yourfile" target="_blank" rel="noopener"
+                    style="margin-top:1rem;">
+                    <i class="fa-brands fa-figma"></i>
+                    Figma
+                </a>
+            </div>
+        </section>
+
+        <!-- Info grid -->
+        <section class="case-info padding">
+            <div class="case-info__row">
+                <div class="case-info__label">Jaar</div>
+                <div class="case-info__value">2025</div>
+            </div>
+            <div class="case-info__row">
+                <div class="case-info__label">Deliverables</div>
+                <div class="case-info__value">
+                    3D Kiosk Model<br>
+                    Branding & Design<br>
+                    Moodboard<br>
+                    Blender .blend file<br>
+                    Renders & Animatie
+                </div>
+            </div>
+            <div class="case-info__row">
+                <div class="case-info__label">Stack</div>
+                <div class="case-info__value case-info__tags">
+                    <span>Blender</span>
+                    <span>Photoshop</span>
+                    <span>3D Modeling</span>
+                    <span>Rendering</span>
+                </div>
+            </div>
+            <div class="case-info__row">
+                <div class="case-info__label">Features</div>
+                <div class="case-info__value">
+                    Theme-specific kiosk design<br>
+                    Decorative 3D elements<br>
+                    Digital menu display<br>
+                    Realistic materials & lighting<br>
+                    Micro-animations 
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards Parallax (Olivier-style) -->
+        <section class="olc padding" data-olc-cards>
+            <div class="olc__main">
+                <div class="olc__card-container">
+                    <figure class="olc__card"><video src="img/blendersushi.mp4" alt="Sushi Kiosk Moodboard" autoplay
+                            muted loop playsinline></video></figure>
+                </div>
+                <div class="olc__card-container">
+                    <figure class="olc__card"><img src="img/blender-2.png" alt="Sushi Kiosk Render 1"></figure>
+                </div>
+                <div class="olc__card-container">
+                    <figure class="olc__card"><img src="img/blender-3.png" alt="Sushi Kiosk Render 2"></figure>
+                </div>
+                <div class="olc__card-container">
+                    <figure class="olc__card"><img src="img/blender-4.png" alt="Sushi Kiosk Render 3"></figure>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Enjoy More Section -->
+        <section class="enjoy-more padding">
+            <h3>Enjoyed it?</h3>
+            <p>Explore more projects!</p>
+            <a class="btn btn--pill" href="project-fynk.html">
+                Next project <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </section>
+
+        <!-- Footer (reuse) -->
+        <footer id="contact" class="footer padding">
+            <div class="newsection">
+                <p>Contact</p>
+                <div class="linebody js-animate-line"></div>
+            </div>
+            <div class="footer__row">
+                <h2 class="footer__title">Let’s Work</h2>
+                <a class="btn btn--pill footer__cta" href="mailto:il.bosserez@gmail.com">
+                    <span class="pill__icon" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 17L17 7"></path>
+                            <path d="M7 7h10v10"></path>
+                        </svg>
+                    </span>
+                    <span>Mail me</span>
+                </a>
+            </div>
+            <div class="footer__note">
+                <img class="footer__avatar" src="img/ME.jpg" alt="" />
+                <p>Always happy to chat. Tell me wat je bouwt!</p>
+            </div>
+            <div class="footer__copy">
+                <span>2025</span><span class="dot">•</span><span>Ilian Bosserez</span>
+                <div class="linebody js-animate-line" style="margin-left:auto;"></div>
+            </div>
+        </footer>
+
+        <!-- Transition (already in your site) -->
+        <div class="page-transition" aria-hidden="true"></div>
+
+        <!-- GSAP + your main script -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+        <script src="script.js"></script>
+    </main>
+</body>
+
+</html>

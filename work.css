@@ -221,6 +221,12 @@
   object-fit: cover;
   display: block;
 }
+.olc__card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 @media (prefers-reduced-motion: reduce){
   .olc__card { top: auto; position: relative; height: auto; }
   .olc__card-container { height: auto; }
@@ -302,5 +308,11 @@
   background: #1d1d1d;
   color: #fff;
   border-color: #1d1d1d;
+}
+
+/* sticky safety for cards section */
+.olc, .olc__main, .olc__card-container {
+  overflow: visible !important;
+
 }
 

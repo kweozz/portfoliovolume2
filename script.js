@@ -36,7 +36,7 @@
         scrollTrigger: {
           trigger: explainerEl,
           start: 'top 80%',
-          toggleActions: "play none none reverse", // animate in/out on scroll
+          toggleActions: "play reverse play reverse", // animate in/out on scroll
           once: false
         }
       });
