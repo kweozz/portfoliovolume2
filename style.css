@@ -491,7 +491,6 @@ h1{
 .footer .newsection p{ color:#7a7a7a; font-weight:400; letter-spacing:.08em; }
 
 .footer-linkedin {
-  position: fixed;
   left: 24px;
   bottom: 24px;
   z-index: 1200;
@@ -864,7 +863,6 @@ h1 {
 /* Zorg dat de LinkedIn knop niet over content heen valt op mobiel */
 @media (max-width: 700px) {
   .footer-linkedin {
-    position: static;
     margin-top: 1.5rem;
     margin-left: 0;
     left: unset;
