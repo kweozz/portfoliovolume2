@@ -416,6 +416,7 @@ h1{
   .card--c{ grid-column: 1 / span 6; }
   .card--d{ grid-column: 7 / span 6; }
   .card--e{ grid-column: 1 / span 6; }
+  .card--brains{ grid-column: 1 / span 12; }
 
   .card--a .media,
   .card--b .media,
