@@ -872,3 +872,8 @@ h1 {
   }
 }
 
+
+  .card--brains .media{
+    max-height: 420px;        /* cap height */
+    padding: 12px;            /* slightly tighter padding */
+  }
