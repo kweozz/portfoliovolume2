@@ -903,3 +903,7 @@ h1 {
     object-fit: contain;      /* avoid cropping at smaller height */
     background-color: #ECF1F2;
   }
+/* Disable magnetic transforms on touch */
+@media (hover: none), (pointer: coarse){
+  .btn{ transform: none !important; }
+}

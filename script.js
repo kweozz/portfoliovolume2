@@ -208,24 +208,39 @@
 
 
 
-  /* ----- Magnetic buttons with shine ----- */
+  /* ----- Magnetic buttons (disabled on touch) ----- */
   (() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const enableMagnet =
+      window.matchMedia('(hover: hover) and (pointer: fine)').matches && !prefersReduced;
+
+    if (!enableMagnet) {
+      // Ensure no leftover transforms on mobile/touch
+      document.querySelectorAll('.btn').forEach(btn => (btn.style.transform = 'none'));
+      return;
+    }
+
     const btns = document.querySelectorAll('.btn');
     const strength = 18;
+
     btns.forEach(btn => {
-      btn.addEventListener('mousemove', e => {
+      function onMove(e){
         const r = btn.getBoundingClientRect();
-        const x = e.clientX - r.left,
-          y = e.clientY - r.top;
+        const x = e.clientX - r.left, y = e.clientY - r.top;
         const dx = (x - r.width / 2) / (r.width / 2);
         const dy = (y - r.height / 2) / (r.height / 2);
         btn.style.transform = `translate(${dx*strength}px, ${dy*strength}px)`;
         btn.style.setProperty('--mx', `${x}px`);
         btn.style.setProperty('--my', `${y}px`);
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0,0)';
-      });
+      }
+      const reset = () => { btn.style.transform = 'translate(0,0)'; };
+
+      btn.addEventListener('mousemove', onMove);
+      btn.addEventListener('mouseleave', reset);
+      // Safety for hybrid devices
+      btn.addEventListener('pointerdown', reset);
+      btn.addEventListener('pointercancel', reset);
+      btn.addEventListener('blur', reset, true);
     });
   })();
 
