@@ -877,3 +877,8 @@ h1 {
     max-height: 420px;        /* cap height */
     padding: 12px;            /* slightly tighter padding */
   }
+    .card--brains .media img,
+  .card--brains .media video{
+    object-fit: contain;      /* avoid cropping at smaller height */
+    background-color: #ECF1F2;
+  }
