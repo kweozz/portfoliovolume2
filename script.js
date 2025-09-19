@@ -704,8 +704,34 @@ if (window.gsap && window.ScrollTrigger) {
 
   render();
 })();
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    document.getElementById('site-loader')?.classList.add('hide');
-  }, 400); // adjust delay if you want
-});
+
+/* ===== Friendly loader messages (site-wide) ===== */
+(() => {
+  const loader = document.getElementById('site-loader');
+  const glass  = loader?.querySelector('.loader-glass');
+  if (!loader || !glass || loader.dataset.msg === '1') return;
+  loader.dataset.msg = '1';
+
+  const msg = document.createElement('div');
+  msg.className = 'loader-msg';
+  msg.setAttribute('aria-live', 'polite');
+  glass.appendChild(msg);
+
+  const messages = [
+    'Designing with too much coffee…',
+    'Loading creativity…',
+    'Making it feel just right…',
+    'Your daily dose of design is almost ready…',
+    'Hold on tight, we\'re almost there…',
+    'Adding the final touch',
+    'Good things take a second…'
+  ];
+
+  // Show one random message
+  msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+
+  // Keep current hide timing
+  window.addEventListener('load', () => {
+    setTimeout(() => loader.classList.add('hide'), 750);
+  });
+})();

@@ -832,6 +832,27 @@ h1 {
   100% { transform: rotate(360deg);}
 }
 
+/* Loader: add friendly message */
+.site-loader .loader-glass{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-width: 280px;
+  text-align: center;
+}
+.loader-msg{
+  font: 500 0.95rem/1.3 Inter, system-ui, sans-serif;
+  color:#1D1D1D;
+  letter-spacing:.01em;
+  animation: loaderMsgPulse .9s ease-in-out infinite alternate;
+  white-space: nowrap;
+}
+@keyframes loaderMsgPulse{
+  from{ opacity:.65; transform: translateY(1px); }
+  to{   opacity:1;    transform: translateY(0);   }
+}
+
 /* Responsive footer layout */
 @media (max-width: 900px) {
   .footer__row {
