@@ -725,7 +725,6 @@ if (window.gsap && window.ScrollTrigger) {
   const messages = [
     'Designing with too much coffee…',
     'Loading creativity…',
-    'Making it feel just right…',
     'Your daily dose of design is almost ready…',
     'Hold on tight, we\'re almost there…',
     'Adding the final touch',
