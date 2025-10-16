@@ -769,32 +769,28 @@ if (window.gsap && window.ScrollTrigger) {
   if (!root || root.dataset.ready) return;
   root.dataset.ready = '1';
 
-  // container
   const wrap = document.createElement('div');
   wrap.className = 'loader-wrap';
 
-  // percent label
   const percent = document.createElement('div');
   percent.className = 'loader-percent';
   percent.textContent = '0%';
 
-  // progress bar
   const progress = document.createElement('div');
   progress.className = 'progress';
+
   const bar = document.createElement('div');
   bar.className = 'progress__bar';
   progress.appendChild(bar);
 
-  // microcopy
   const msg = document.createElement('div');
   msg.className = 'loader-msg';
-  msg.setAttribute('aria-live', 'polite');
+  msg.setAttribute('aria-live','polite');
   msg.textContent = ['Designing the moment…','Polishing pixels…','Smoothing motion…','Refining the flow…','Almost there…'][Math.floor(Math.random()*5)];
 
   wrap.append(percent, progress, msg);
   root.appendChild(wrap);
 
-  // animate to ~90% while loading
   let current = 0, target = 90, done = false;
   (function tick(){
     if (done) return;
@@ -805,7 +801,6 @@ if (window.gsap && window.ScrollTrigger) {
     requestAnimationFrame(tick);
   })();
 
-  // complete on window load, fade out, then remove
   window.addEventListener('load', () => {
     done = true;
     let x = current;
