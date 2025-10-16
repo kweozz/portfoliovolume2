@@ -44,35 +44,37 @@
         </button>
         <ul class="nav-links" id="mobile-menu">
             <li><button class="close-menu" aria-label="Close menu">&times;</button></li>
-            <li><a href="IlianBosserezCurriculumVitaeFinal.pdf" target="_blank" rel="noopener">Curriculum Vitae</a></li>
+            <li><a href="IlianBosserezCurriculumVitaeFinal.pdf" target="_blank" rel="noopener">Curriculum Vitae</a>
+            </li>
             <li><a href="index.html#work">Work</a></li>
             <li><a href="index.html#expertise">Expertise</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
         <div class="nav-overlay" aria-hidden="true"></div>
     </nav>
-    <!-- Navigation buttons -->
-    <section class="case-nav padding">
-        <a class="btn btn--icon case-nav__back" href="index.html" aria-label="Back to overview">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
-    </section>
+
     <!-- HERO -->
     <header class="case-hero">
-        <div class="case padding">
-            <figure class="case-hero__media">
-                <img src="img/blender-2.png" alt="Blender Sushi Kiosk hero" loading="eager" />
-                <figcaption class="case-hero__caption">
-                    <h1>Blender Sushi Kiosk</h1>
-                    <p class="subtitle">Digitale streetfood kiosk — 3D design & branding</p>
-                </figcaption>
-            </figure>
-        </div>
+      <div class="case padding">
+        <figure class="case-hero__media">
+          <div class="case-nav">
+            <a class="wako-btn wako-btn--ghost no-arrow" href="index.html" aria-label="Back to home">
+              <span class="wb-inner"><span class="wb-label">← Home</span></span>
+              <span class="wb-fill"></span>
+            </a>
+          </div>
+          <img src="img/blender-2.png" alt="Blender Sushi Kiosk hero" loading="eager" />
+          <figcaption class="case-hero__caption">
+            <h1>Blender Sushi Kiosk</h1>
+            <p class="subtitle">Digitale streetfood kiosk — 3D design & branding</p>
+          </figcaption>
+        </figure>
+      </div>
     </header>
 
     <main>
         <!-- Explainer (same class as homepage) -->
-        <section class="explainer-wrap padding">
+        <section class="explainer-wrap padding explainer-flex">
             <div class="explainer" id="explainer">
                 For my 3D course, I designed and modeled a streetfood kiosk in Blender. The project focused on combining
                 branding with 3D modeling, materials, and lighting to create a functional and visually engaging concept.
@@ -138,11 +140,15 @@
 
         <!-- Enjoy More Section -->
         <section class="enjoy-more padding">
-            <h3>Enjoyed it?</h3>
-            <p>Explore more projects!</p>
-            <a class="btn btn--pill" href="project-swear.html">
-                Next project <i class="fa-solid fa-arrow-right"></i>
-            </a>
+          <h3>Enjoyed it?</h3>
+          <p>Explore more projects!</p>
+          <a id="nextProjectLink" class="wako-btn wako-btn--solid has-arrow" href="project-swear.html">
+            <span class="wb-inner">
+              <span class="wb-label">Next project</span>
+              <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </span>
+            <span class="wb-fill"></span>
+          </a>
         </section>
 
         <!-- Footer (reuse) -->

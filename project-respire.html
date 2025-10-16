@@ -44,35 +44,37 @@
         </button>
         <ul class="nav-links" id="mobile-menu">
             <li><button class="close-menu" aria-label="Close menu">&times;</button></li>
-            <li><a href="IlianBosserezCurriculumVitaeFinal.pdf" target="_blank" rel="noopener">Curriculum Vitae</a></li>
+            <li><a href="IlianBosserezCurriculumVitaeFinal.pdf" target="_blank" rel="noopener">Curriculum Vitae</a>
+            </li>
             <li><a href="index.html#work">Work</a></li>
             <li><a href="index.html#expertise">Expertise</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
         <div class="nav-overlay" aria-hidden="true"></div>
     </nav>
-    <!-- Navigation buttons -->
-    <section class="case-nav padding">
-        <a class="btn btn--icon case-nav__back" href="index.html" aria-label="Back to overview">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
-    </section>
+
     <!-- HERO -->
     <header class="case-hero">
-        <div class="case padding">
-            <figure class="case-hero__media">
-                <img src="img/Mockup.jpg" alt="Respire hero" loading="eager" />
-                <figcaption class="case-hero__caption">
-                    <h1>Respire: <span class="soft-break">Marketplace App</span></h1>
-                    <p class="subtitle">A fresh take on second-hand shopping</p>
-                </figcaption>
-            </figure>
-        </div>
+      <div class="case padding">
+        <figure class="case-hero__media">
+          <div class="case-nav">
+            <a class="wako-btn wako-btn--ghost no-arrow" href="index.html" aria-label="Back to home">
+              <span class="wb-inner"><span class="wb-label">← Home</span></span>
+              <span class="wb-fill"></span>
+            </a>
+          </div>
+          <img src="img/Mockup.jpg" alt="Respire hero" loading="eager" />
+          <figcaption class="case-hero__caption">
+            <h1>Respire: <span class="soft-break">Marketplace App</span></h1>
+            <p class="subtitle">A fresh take on second-hand shopping</p>
+          </figcaption>
+        </figure>
+      </div>
     </header>
 
     <main>
         <!-- Explainer -->
-        <section class="explainer-wrap padding">
+        <section class="explainer-wrap padding explainer-flex">
             <div class="explainer" id="explainer">
                 Respire is a platform designed to encourage the sharing and discovery of second-hand outfits, with a
                 focus on style and community engagement. The platform distinguishes itself by allowing users to share
@@ -80,11 +82,14 @@
                 more than just a marketplace.
             </div>
             <div class="explainer-cta">
-                <a class="btn btn--pill"
+                <a class="wako-btn wako-btn--solid has-arrow"
                     href="https://www.figma.com/design/T3oxiZitmf2KdoAEfKaHhm/Respire?node-id=1-113&t=VowcND1IC6T4AaVt-1"
                     target="_blank" rel="noopener">
-                    <i class="fa-brands fa-figma"></i>
-                    Figma
+                    <span class="wb-inner">
+                        <span class="wb-label"><i class="fa-brands fa-figma"></i> Figma</span>
+                        <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                    </span>
+                    <span class="wb-fill"></span>
                 </a>
             </div>
         </section>
@@ -153,11 +158,15 @@
 
         <!-- Enjoy More Section -->
         <section class="enjoy-more padding">
-            <h3>Enjoyed it?</h3>
-            <p>Explore more projects!</p>
-            <a class="btn btn--pill" href="project-hoppin.html">
-                Next project <i class="fa-solid fa-arrow-right"></i>
-            </a>
+          <h3>Enjoyed it?</h3>
+          <p>Explore more projects!</p>
+          <a id="nextProjectLink" class="wako-btn wako-btn--solid has-arrow" href="project-hoppin.html">
+            <span class="wb-inner">
+              <span class="wb-label">Next project</span>
+              <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </span>
+            <span class="wb-fill"></span>
+          </a>
         </section>
 
         <!-- Footer (reuse) -->

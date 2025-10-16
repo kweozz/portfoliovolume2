@@ -48,38 +48,42 @@
         </ul>
         <div class="nav-overlay" aria-hidden="true"></div>
     </nav>
-    <!-- Navigation buttons -->
-    <section class="case-nav padding">
-        <a class="btn btn--icon case-nav__back" href="index.html" aria-label="Back to overview">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
-    </section>
+
     <!-- HERO -->
     <header class="case-hero">
-        <div class="case padding">
-            <figure class="case-hero__media">
-                <img src="img/hoppin-thumbb.png" alt="Hoppin App Rebrand hero" loading="eager" />
-                <figcaption class="case-hero__caption">
-                    <h1>Hoppin <span class="soft-break">App Rebrand</span></h1>
-                    <p class="subtitle">A fresh UX/UI for a sustainable mobility app</p>
-                </figcaption>
-            </figure>
-        </div>
-    </header>
+  <div class="case padding">
+    <figure class="case-hero__media">
+      <div class="case-nav">
+        <a class="wako-btn wako-btn--ghost no-arrow" href="index.html" aria-label="Back to home">
+          <span class="wb-inner"><span class="wb-label">← Home</span></span>
+          <span class="wb-fill"></span>
+        </a>
+      </div>
+      <img src="img/hoppin-thumbb.png" alt="Hoppin App Rebrand hero" loading="eager" />
+      <figcaption class="case-hero__caption">
+        <h1>Hoppin <span class="soft-break">App Rebrand</span></h1>
+        <p class="subtitle">A fresh UX/UI for a sustainable mobility app</p>
+      </figcaption>
+    </figure>
+  </div>
+</header>
 
     <main>
         <!-- Explainer -->
-        <section class="explainer-wrap padding">
-            <div class="explainer" id="explainer">
-                For this project, I reimagined the Hoppin app with a new brand identity, focusing on a clean and accessible user experience. The assignment included designing the full UX and UI, creating micro-animations, and rigorously user testing the flows. <br><br>
-                I followed Nielsen’s heuristics and THE CRAP design principles, conducted A/B tests, and iterated based on real user feedback. 
-            </div>
-            <div class="explainer-cta">
-                <a class="btn btn--pill btn--outline" href="https://www.figma.com/design/e2HGcyqT9anZVsyplFmrgm/Hoppin--Ilian-V3?node-id=6-1209&t=PNrvSeA7alAadtNh-1" target="_blank" rel="noopener">
-                    <i class="fa-brands fa-figma"></i>
-                    Figma
-                </a>
-            </div>
+        <section class="explainer-wrap padding explainer-flex">
+          <div class="explainer" id="explainer">
+            For this project, I reimagined the Hoppin app with a new brand identity, focusing on a clean and accessible user experience. The assignment included designing the full UX and UI, creating micro-animations, and rigorously user testing the flows. <br><br>
+            I followed Nielsen’s heuristics and THE CRAP design principles, conducted A/B tests, and iterated based on real user feedback. 
+          </div>
+          <div class="explainer-cta">
+            <a class="wako-btn wako-btn--ghost has-arrow" href="https://www.figma.com/design/e2HGcyqT9anZVsyplFmrgm/Hoppin--Ilian-V3?node-id=6-1209&t=PNrvSeA7alAadtNh-1" target="_blank" rel="noopener">
+              <span class="wb-inner">
+                <span class="wb-label"><i class="fa-brands fa-figma"></i> Figma</span>
+                <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+              </span>
+              <span class="wb-fill"></span>
+            </a>
+          </div>
         </section>
 
         <!-- Info grid -->
@@ -142,12 +146,16 @@
 
         <!-- Enjoy More Section -->
         <section class="enjoy-more padding">
-            <h3>Enjoyed it?</h3>
-            <p>Explore more projects!</p>
-            <a class="btn btn--pill" href="project-brainscoffee.html">
-                Next project <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </section>
+  <h3>Enjoyed it?</h3>
+  <p>Explore more projects!</p>
+  <a id="nextProjectLink" class="wako-btn wako-btn--solid has-arrow" href="project-brainscoffee.html">
+    <span class="wb-inner">
+      <span class="wb-label">Next project</span>
+      <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </span>
+    <span class="wb-fill"></span>
+  </a>
+</section>
 
         <!-- Footer (reuse) -->
        <footer id="contact" class="footer padding">
@@ -189,3 +197,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
         <script src="script.js"></script>
+    </main>
+</body>
+
+</html>

@@ -49,43 +49,47 @@
     </ul>
     <div class="nav-overlay" aria-hidden="true"></div>
   </nav>
-  <!-- Navigation buttons -->
-  <section class="case-nav padding">
-    <a class="btn btn--icon case-nav__back" href="index.html" aria-label="Back to overview">
-      <i class="fa-solid fa-arrow-left"></i>
-    </a>
-  </section>
-  </main>
+
   <!-- HERO -->
   <header class="case-hero">
-    <div class="case padding"> <!-- constrains hero to the same project width -->
-      <figure class="case-hero__media">
-        <img src="img/fynk-hero.png" alt="Fynk hero" loading="eager" />
-        <figcaption class="case-hero__caption">
-          <h1>Fynk: <span class="soft-break">Focus app</span></h1>
-          <p class="subtitle">Social study app that makes focus feel fun</p>
-        </figcaption>
-      </figure>
-
-    </div>
-  </header>
+  <div class="case padding">
+    <figure class="case-hero__media">
+      <div class="case-nav">
+        <a class="wako-btn wako-btn--ghost no-arrow" href="index.html" aria-label="Back to home">
+          <span class="wb-inner"><span class="wb-label">← Home</span></span>
+          <span class="wb-fill"></span>
+        </a>
+      </div>
+      <img src="img/fynk-hero.png" alt="Fynk hero" loading="eager" />
+      <figcaption class="case-hero__caption">
+        <h1>Fynk: <span class="soft-break">Focus app</span></h1>
+        <p class="subtitle">Social study app that makes focus feel fun</p>
+      </figcaption>
+    </figure>
+  </div>
+</header>
 
   <main>
     <!-- Explainer (same class as homepage) -->
-    <section class="explainer-wrap padding">
+    <section class="explainer-wrap padding explainer-flex">
       <div class="explainer" id="explainer">
         Fynk helps students beat distraction with science-backed focus sessions, a light XP system (streaks, levels,
         boosters), and a small social nudge. Minimal UI, fast onboarding, and friendly motion.
       </div>
       <div class="explainer-cta">
-        <a class="btn btn--pill" href="https://github.com/kweozz/fynk-app-2025" target="_blank" rel="noopener">
-          <i class="fa-brands fa-github"></i>
-          Code
+        <a class="wako-btn wako-btn--solid has-arrow" href="https://github.com/kweozz/fynk-app-2025" target="_blank" rel="noopener">
+          <span class="wb-inner">
+            <span class="wb-label"><i class="fa-brands fa-github"></i> Code</span>
+            <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+          </span>
+          <span class="wb-fill"></span>
         </a>
-        <a class="btn btn--pill btn--outline" href="https://www.figma.com/design/flrOhSfjSRXx4yVvlbS6M4/Fynk-Designsystem-Ilian?node-id=4124-3150&t=qyKoDKdkpAZGu1uP-1" target="_blank" rel="noopener"
-          style="margin-top:1rem;">
-          <i class="fa-brands fa-figma"></i>
-          Figma
+        <a class="wako-btn wako-btn--ghost has-arrow" href="https://www.figma.com/design/flrOhSfjSRXx4yVvlbS6M4/Fynk-Designsystem-Ilian?node-id=4124-3150&t=qyKoDKdkpAZGu1uP-1" target="_blank" rel="noopener">
+          <span class="wb-inner">
+            <span class="wb-label"><i class="fa-brands fa-figma"></i> Figma</span>
+            <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+          </span>
+          <span class="wb-fill"></span>
         </a>
       </div>
     </section>
@@ -152,12 +156,16 @@
 
     <!-- Enjoy More Section -->
     <section class="enjoy-more padding">
-      <h3>Enjoyed it?</h3>
-      <p>Explore more projects!</p>
-      <a class="btn btn--pill" href="project-blender.html">
-        Next project <i class="fa-solid fa-arrow-right"></i>
-      </a>
-    </section>
+  <h3>Enjoyed it?</h3>
+  <p>Explore more projects!</p>
+  <a id="nextProjectLink" class="wako-btn wako-btn--solid has-arrow" href="project-blender.html">
+    <span class="wb-inner">
+      <span class="wb-label">Next project</span>
+      <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </span>
+    <span class="wb-fill"></span>
+  </a>
+</section>
 
     <!-- Footer (reuse) -->
     <footer id="contact" class="footer padding">
@@ -167,15 +175,12 @@
             </div>
             <div class="footer__row">
                 <h2 class="footer__title">Let’s Work</h2>
-                <a class="btn btn--pill footer__cta" href="mailto:il.bosserez@gmail.com">
-                    <span class="pill__icon" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M7 17L17 7"></path>
-                            <path d="M7 7h10v10"></path>
-                        </svg>
-                    </span>
-                    <span>Mail me</span>
+                <a class="wako-btn wako-btn--solid has-arrow footer__cta" href="mailto:il.bosserez@gmail.com">
+                  <span class="wb-inner">
+                    <span class="wb-label">Mail me</span>
+                    <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                  </span>
+                  <span class="wb-fill"></span>
                 </a>
             </div>
          <div class="footer__note">

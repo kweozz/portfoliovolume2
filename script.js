@@ -208,39 +208,11 @@
 
 
 
-  /* ----- Magnetic buttons (disabled on touch) ----- */
+  /* ----- Magnetic buttons (removed) ----- */
   (() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const enableMagnet =
-      window.matchMedia('(hover: hover) and (pointer: fine)').matches && !prefersReduced;
-
-    if (!enableMagnet) {
-      // Ensure no leftover transforms on mobile/touch
-      document.querySelectorAll('.btn').forEach(btn => (btn.style.transform = 'none'));
-      return;
-    }
-
-    const btns = document.querySelectorAll('.btn');
-    const strength = 18;
-
-    btns.forEach(btn => {
-      function onMove(e){
-        const r = btn.getBoundingClientRect();
-        const x = e.clientX - r.left, y = e.clientY - r.top;
-        const dx = (x - r.width / 2) / (r.width / 2);
-        const dy = (y - r.height / 2) / (r.height / 2);
-        btn.style.transform = `translate(${dx*strength}px, ${dy*strength}px)`;
-        btn.style.setProperty('--mx', `${x}px`);
-        btn.style.setProperty('--my', `${y}px`);
-      }
-      const reset = () => { btn.style.transform = 'translate(0,0)'; };
-
-      btn.addEventListener('mousemove', onMove);
-      btn.addEventListener('mouseleave', reset);
-      // Safety for hybrid devices
-      btn.addEventListener('pointerdown', reset);
-      btn.addEventListener('pointercancel', reset);
-      btn.addEventListener('blur', reset, true);
+    // Clean any leftover transforms and exit (no hover JS at all)
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.style.transform = 'none';
     });
   })();
 
@@ -661,63 +633,81 @@ if (window.gsap && window.ScrollTrigger) {
   const section = document.querySelector('[data-olc-cards]');
   if (!section) return;
 
-  const main   = section.querySelector('.olc__main');
-  const cards  = Array.from(section.querySelectorAll('.olc__card'));
-  const N      = cards.length;
-  if (!N) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches && window.innerWidth > 720;
 
-  // Stack offsets and z-index (later cards sit above earlier ones)
-  cards.forEach((card, i) => {
-    card.style.setProperty('--offset', `${i * 25}px`);
-    card.style.zIndex = String(100 + i);
-  });
+  const main  = section.querySelector('.olc__main');
+  const cards = Array.from(section.querySelectorAll('.olc__card'));
+  if (!cards.length) return;
 
-  // Track progress for the WHOLE section (0..1)
-  let start = 0, end = 1;
-  function measure(){
-    const r = main.getBoundingClientRect();
-    const y = window.scrollY || window.pageYOffset;
-    start = r.top + y;
-    end   = start + main.offsetHeight - window.innerHeight;
-  }
-  const clamp01 = v => Math.max(0, Math.min(1, v));
-  const map = (v, inA, inB, outA, outB) => {
-    const t = clamp01((v - inA) / Math.max(1e-6, (inB - inA)));
-    return outA + (outB - outA) * t;
-  };
-
-  // Smooth progress lerping
-  let targetProgress = 0, smoothProgress = 0;
-  function render(){
-    const y = window.scrollY || window.pageYOffset;
-    targetProgress = clamp01((y - start) / Math.max(1, (end - start)));  // 0..1
-
-    // Lerp for smoothness
-    smoothProgress += (targetProgress - smoothProgress) * 0.13;
-
+  // Desktop: sticky stack + smooth scale (existing behavior)
+  if (isDesktop && !prefersReduced) {
     cards.forEach((card, i) => {
-      const targetScale = 1 - ((N - i) * 0.05);
-      const rangeStart  = i / N;
-      const s = (smoothProgress <= rangeStart)
-        ? 1
-        : map(smoothProgress, rangeStart, 1, 1, targetScale);
-
-      // Optional: fade out cards as they shrink
-      const fade = (s < 0.92) ? map(s, targetScale, 0.92, 0, 1) : 1;
-
-      card.style.transform = `scale(${s.toFixed(4)})`;
-      card.style.opacity = fade;
+      card.style.setProperty('--offset', `${i * 25}px`);
+      card.style.zIndex = String(100 + i);
     });
 
-    requestAnimationFrame(render);
+    let start = 0, end = 1;
+    const clamp01 = v => Math.max(0, Math.min(1, v));
+    const map = (v, a, b, c, d) => c + (d - c) * (Math.max(0, Math.min(1, (v - a) / Math.max(1e-6, b - a))));
+
+    const measure = () => {
+      const r = main.getBoundingClientRect();
+      const y = window.scrollY || window.pageYOffset;
+      start = r.top + y;
+      end   = start + main.offsetHeight - window.innerHeight;
+    };
+
+    let target = 0, smooth = 0;
+    const render = () => {
+      const y = window.scrollY || window.pageYOffset;
+      target = clamp01((y - start) / Math.max(1, end - start));
+      smooth += (target - smooth) * 0.13;
+
+      cards.forEach((card, i) => {
+        const n = cards.length;
+        const targetScale = 1 - (n - i) * 0.05;
+        const rangeStart  = i / n;
+        const s = (smooth <= rangeStart) ? 1 : map(smooth, rangeStart, 1, 1, targetScale);
+        const fade = s < 0.92 ? map(s, targetScale, 0.92, 0, 1) : 1;
+        card.style.transform = `scale(${s})`;
+        card.style.opacity = fade;
+      });
+
+      requestAnimationFrame(render);
+    };
+
+    measure();
+    render();
+    window.addEventListener('resize', measure);
+    return;
   }
 
-  // setup & listeners
-  const setup = () => { measure(); };
-  setup();
-  window.addEventListener('resize', setup);
+  // Mobile / tablets: no sticky → per-card reveal + gentle inner parallax
+  if (window.gsap && window.ScrollTrigger && !prefersReduced) {
+    gsap.registerPlugin(ScrollTrigger);
 
-  render();
+    cards.forEach((card) => {
+      // reveal card
+      gsap.from(card, {
+        y: 20, scale: 0.985, opacity: 0,
+        duration: 0.6, ease: 'power2.out',
+        scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none reverse' }
+      });
+
+      // subtle inner parallax for media
+      const media = card.querySelector('img,video');
+      if (media) {
+        gsap.fromTo(media, { y: -8 }, {
+          y: 8, ease: 'none',
+          scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      }
+    });
+
+    // make sure layout is measured with fonts
+    if (document.fonts?.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+  }
 })();
 
 /* ===== Friendly loader messages (site-wide) ===== */
@@ -749,4 +739,26 @@ if (window.gsap && window.ScrollTrigger) {
   window.addEventListener('load', () => {
     setTimeout(() => loader.classList.add('hide'), 750);
   });
+})();
+
+/* ===== Case pages: dynamic Next Project (loops all projects) ===== */
+(() => {
+  if (!document.body.classList.contains('case-page')) return;
+
+  const order = [
+    'project-fynk.html',
+    'project-blender.html',
+    'project-swear.html',
+    'project-respire.html',
+    'project-hoppin.html',
+    'project-brainscoffee.html'
+  ].map(s => s.toLowerCase());
+
+  const current = location.pathname.split('/').pop().toLowerCase();
+  const i = order.indexOf(current);
+  if (i < 0) return;
+
+  const nextHref = order[(i + 1) % order.length];
+  const nextBtn = document.getElementById('nextProjectLink');
+  if (nextBtn) nextBtn.href = nextHref;
 })();

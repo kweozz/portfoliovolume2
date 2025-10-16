@@ -45,36 +45,46 @@
         <div class="nav-overlay" aria-hidden="true"></div>
     </nav>
 
-    <section class="case-nav padding">
-        <a class="btn btn--icon case-nav__back" href="index.html" aria-label="Back to overview">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
-    </section>
-
     <!-- HERO -->
     <header class="case-hero">
-        <div class="case padding">
-            <figure class="case-hero__media">
-                <img src="img/brainshero.jpeg" alt="Brains Coffee hero visual" loading="eager" />
-                <figcaption class="case-hero__caption">
-                    <h1>Brains Coffee <span class="soft-break">Visual identity and web design</span></h1>
-                    <p class="subtitle">Logo, colors, typography & landing page design</p>
-                </figcaption>
-            </figure>
-        </div>
+      <div class="case padding">
+        <figure class="case-hero__media">
+          <!-- Back placed inside the media -->
+          <div class="case-nav">
+            <a class="wako-btn wako-btn--ghost no-arrow" href="index.html" aria-label="Back to home">
+              <span class="wb-inner"><span class="wb-label">← Home</span></span>
+              <span class="wb-fill"></span>
+            </a>
+          </div>
+          <img src="img/brainshero.jpeg" alt="Brains Coffee hero visual" loading="eager" />
+          <figcaption class="case-hero__caption">
+            <h1>Brains Coffee <span class="soft-break">Visual identity and web design</span></h1>
+            <p class="subtitle">Logo, colors, typography & landing page design</p>
+          </figcaption>
+        </figure>
+      </div>
     </header>
 
     <main>
         <!-- Explainer -->
-        <section class="explainer-wrap padding">
+        <section class="explainer-wrap padding explainer-flex">
             <div class="explainer" id="explainer">
                 Brains Coffee is a fictional specialty coffee brand I created as a personal project to showcase branding and digital design skills. The concept: mornings can feel like the zombie apocalypse — coffee brings you back to life.
             </div>
             <div class="explainer-cta">
-                <a class="btn btn--pill btn--outline"
-                    href="https://www.figma.com/design/VkbA514SVDRTELkhxtHT2e/Brains-coffee?node-id=0-1&t=HaLBHBcvL1ZE1mFB-1"
-                    target="_blank" rel="noopener">
-                    <i class="fa-brands fa-figma"></i> Figma
+                <a class="wako-btn wako-btn--ghost has-arrow" href="https://www.figma.com/design/VkbA514SVDRTELkhxtHT2e/Brains-coffee?node-id=0-1" target="_blank" rel="noopener">
+                    <span class="wb-inner">
+                        <span class="wb-label"><i class="fa-brands fa-figma"></i> View design</span>
+                        <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                    </span>
+                    <span class="wb-fill"></span>
+                </a>
+                <a class="wako-btn wako-btn--solid has-arrow" href="mailto:il.bosserez@gmail.com">
+                    <span class="wb-inner">
+                        <span class="wb-label">Request a quote</span>
+                        <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                    </span>
+                    <span class="wb-fill"></span>
                 </a>
             </div>
         </section>
@@ -146,11 +156,15 @@
 
         <!-- Enjoy More -->
         <section class="enjoy-more padding">
-            <h3>Enjoyed it?</h3>
-            <p>Explore more projects!</p>
-            <a class="btn btn--pill" href="project-fynk.html">
-                Next project <i class="fa-solid fa-arrow-right"></i>
-            </a>
+          <h3>Enjoyed it?</h3>
+          <p>Explore more projects!</p>
+          <a id="nextProjectLink" class="wako-btn wako-btn--solid has-arrow" href="project-fynk.html">
+            <span class="wb-inner">
+              <span class="wb-label">Next project</span>
+              <span class="wb-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </span>
+            <span class="wb-fill"></span>
+          </a>
         </section>
 
         <!-- Footer -->

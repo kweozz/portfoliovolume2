@@ -1,344 +1,513 @@
-/* ---- Case hero (Figma-alike) ---- */
-.case-hero__media {
-  position: relative;
-  height: clamp(400px, 70vh, 680px);
-  border-radius: 20px;
-  overflow: hidden;
-}
-.case{
-
-    width: 100%;
-
-}
-.case-hero__media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-    object-fit: cover;
-  object-position: center;
-  filter: brightness(.72) saturate(.98);
-  transition: transform .8s cubic-bezier(.2,.9,.2,1), filter .5s;
-  transform-origin: center;
+/* === WAKO-alike case page polish (keeps your colors) === */
+:root{
+  --ink: #1D1D1D;
+  --muted: #818489;
+  --brand: #1D1D1D;    /* use your dark ink for fills/hover */
+  --ring: #E6E7EA;
+  --surface: #F7F8FB;
+  --radius-3: 24px;
+  --h2: clamp(1.6rem, 3.6vw, 2.4rem);
+  --lh-copy: 1.7;
 }
 
-.case-hero__media:hover img {
-  transform: scale(1.04);
-  filter: brightness(.8);
+/* HERO */
+.case-hero__media{
+  position:relative; height:clamp(320px,52vh,520px);
+  border-radius:var(--radius-3); overflow:hidden; margin:0;
+}
+.case-hero__media::before{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background: linear-gradient(180deg, rgba(10,14,22,.14) 0%, rgba(10,14,22,.32) 40%, rgba(10,14,22,.56) 100%);
+}
+.case-hero__media img{
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  filter:brightness(.68) saturate(.98);
+  transition:transform .8s cubic-bezier(.2,.9,.2,1), filter .5s; transform-origin:center;
+}
+.case-hero__media:hover img{ transform:scale(1.04); filter:brightness(.8); }
+
+.case-hero__caption{
+  position:absolute; inset:0; z-index:2; display:flex; align-items:center; justify-content:center;
+  flex-direction:column; text-align:center; pointer-events:none;
+}
+.case-hero__caption h1{
+  margin:0; color:#fff; font-weight:300; line-height:.95;
+  font-size:clamp(2.8rem,8.5vw,6rem); letter-spacing:-.03em;
+  text-shadow:0 20px 46px rgba(0,0,0,.6); max-width:90%;
+  font-family:'DM Sans', sans-serif;
+}
+.case-hero__caption h1 .soft-break{ display:block; }
+.case-hero__caption .subtitle{
+  margin-top:.5rem; color:rgba(255,255,255,.95);
+  font-size:clamp(.9rem,1.6vw,1.1rem); font-weight:300;
 }
 
-/* center the text over image */
-.case-hero__caption {
+@media (max-width:640px){
+  .case-hero__media{ height:clamp(220px,38vh,340px); }
+  .case-hero__media::before{
+    background: linear-gradient(180deg, rgba(10,14,22,.22) 0%, rgba(10,14,22,.42) 40%, rgba(10,14,22,.66) 100%);
+  }
+  .case-hero__caption{ padding:6vh 5vw; }
+  .case-hero__caption h1{ font-size:clamp(1.8rem,8.8vw,3.6rem); line-height:1; }
+  .case-hero__caption .subtitle{ font-size:clamp(.88rem,3.8vw,1rem); }
+}
+
+/* Case hero needs positioning context for back button */
+.case-hero{ position: relative; }
+
+/* Back button (WAKO ghost, top-left over hero) */
+.case-nav{
   position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
+  top: 16px; left: 16px; z-index: 5; pointer-events: auto;
+}
+.case-nav .wako-btn{
+  --btn-bg: transparent;
+  --btn-fg: #fff;
+  --btn-border: #fff;
+  --btn-fill: #1d1d1d;     /* fill stays portfolio grey */
+  --arrow-w: 0;
+  padding: .6rem 1rem;
+  font-size: .9rem;
+  border-width: 1.5px;
+  color:#fff;
+}
+@media (max-width:640px){
+  .case-nav{ top: 10px; left: 10px; }
+  .case-nav .wako-btn{ padding: .5rem .8rem; font-size: .8rem; }
+}
+
+/* CTA cluster alignment (right on desktop, stacked on mobile) */
+.explainer-flex {
+  display: grid;
+  grid-template-columns: 1.3fr auto;
+  align-items: start;
+  gap: clamp(16px, 4vw, 40px);
+}
+.explainer-wrap .explainer{ margin:0; }
+.explainer-cta{
+  display: grid;
+  grid-auto-flow: row;
+  gap: 10px;
+  justify-self: end;
+  justify-items: end;
+  align-self: start;
+}
+@media (max-width: 900px){
+  .explainer-flex{ grid-template-columns: 1fr; }
+  .explainer-cta{ justify-self: start; justify-items: start; display:flex; flex-wrap:wrap; gap:10px; }
+}
+
+/* Info grid polish */
+.case-info{ display:flex; flex-direction:column; }
+.case-info__row{
+  display:flex; flex-wrap:wrap; align-items:flex-start; gap:2vw;
+  border-bottom:1px solid var(--ring); padding:24px 0;
+}
+.case-info__row:last-child{ border-bottom:none; }
+.case-info__label{
+  min-width:120px; color:var(--muted); font-size:.92rem; letter-spacing:.08em;
+  text-transform:uppercase; font-weight:600; flex:0 0 140px;
+}
+.case-info__value{ color:var(--ink); font-size:1.05rem; line-height:var(--lh-copy); font-weight:400; flex:1 1 0; }
+.case-info__tags{ display:flex; flex-wrap:wrap; gap:.55em; }
+.case-info__tags span{
+  position:relative; display:inline-flex; align-items:center; gap:.5em;
+  font-size:14px; font-weight:500; color:var(--ink);
+  border:1.5px solid var(--brand); background:#fff; border-radius:999px; padding:8px 16px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+/* Parallax cards spacing closer to WAKO */
+.olc { margin-top: clamp(16px, 4vw, 40px); }
+.olc__card-container{ height:max(78vh, 560px); }
+@media (max-width: 720px){
+  .olc__card-container{ height:auto; }
+  .olc__card{ position:relative; top:0; height:auto; }
+}
+
+/* Buttons — keep black pill and make outline fill on hover (WAKO-style) */
+.case-page .btn--pill{
+  color:#fff; background:#171717; border:1px solid #1d1d1d;
+  position:relative; overflow:hidden; isolation:isolate;
+  --btn-fill:#2a2a2a;
+}
+.case-page .btn--pill::after{
+  content:""; position:absolute; inset:0; z-index:0;
+  background: var(--btn-fill);
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  transition: transform .36s cubic-bezier(.2,.8,.2,1);
+}
+.case-page .btn--pill > *{ position:relative; z-index:1; }
+.case-page .btn--pill:hover::after,
+.case-page .btn--pill:focus-visible::after,
+.case-page .btn--pill:active::after{ transform: scaleY(1); }
+.case-page .btn--outline{
+  position:relative; z-index:0; background:transparent; color:#1d1d1f; border:1.5px solid #1d1d1f;
+  overflow:hidden; transition: color .25s cubic-bezier(.2,.8,.2,1);
+}
+.case-page .btn--outline::after{
+  content:""; position:absolute; inset:0; background:#1d1d1f;
+  transform:scaleX(0); transform-origin:left center; transition:transform .45s cubic-bezier(.2,.8,.2,1);
+  z-index:-1;
+}
+@media (hover:hover) and (pointer:fine){
+  .case-page .btn--outline:hover::after{ transform:scaleX(1); }
+  .case-page .btn--outline:hover{ color:#fff; }
+}
+.case-page .btn--outline:focus-visible::after,
+.case-page .btn--outline:active::after{ transform:scaleX(1); }
+.case-page .btn--outline:focus-visible,
+.case-page .btn--outline:active{ color:#fff; }
+
+/* Clean Wako button with bottom-fill hover. */
+.wako-btn {
+  --btn-bg: #0a0a0a;
+  --btn-fg: #ffffff;
+  --btn-border: #0a0a0a;
+  --btn-fill: #0579FE;      /* visible fill like WAKO; override per button if needed */
+  --btn-fg-onfill: #ffffff;
+  --arrow-w: 1.25rem;
+
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid var(--btn-border);
+  padding: 1.05rem 1.5rem; /* a bit tighter for your pages */
+  outline: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .18s ease, background .18s ease, color .18s ease, border .18s ease;
+}
+.wako-btn--solid { background: var(--btn-bg); color: var(--btn-fg); }
+.wako-btn--ghost { background: transparent; color: var(--ink); }  /* readable ghost state */
+
+/* inner grid */
+.wb-inner{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto var(--arrow-w);
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-
-  pointer-events: none;
+  justify-items: center;
+  gap: .6rem;
+  z-index: 2;
+  width: 100%;
 }
+.wako-btn.no-arrow .wb-inner{ grid-template-columns: 1fr auto 0; }
+.wb-label{ grid-column: 2; display:inline-flex; align-items:center; gap:.6rem; }
+.wb-arrow{ grid-column: 3; justify-self:end; opacity:0; transform:translateX(-6px);
+  transition: transform .25s ease, opacity .25s ease; pointer-events:none; }
+.wako-btn.has-arrow:hover .wb-arrow{ opacity:1; transform:translateX(0); }
 
-.case-hero__caption h1 {
-  margin: 0;
-  color: #fff;
-  font-weight: 300;
-  line-height: 1.08;             /* was .95 */
-  font-size: clamp(3.2rem, 10.5vw, 7.6rem);
-  letter-spacing: -0.02em;
-  text-shadow: 0 20px 46px rgba(0,0,0,.6);
-  max-width: 90%;
-  font-family: 'DM Sans', sans-serif;
+/* bottom fill */
+.wb-fill{ position:absolute; inset:0; z-index:1; pointer-events:none; }
+.wb-fill::before{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:100%;
+  background: var(--btn-fill);
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  transition: transform .36s cubic-bezier(.2,.8,.2,1);
 }
+.wako-btn:hover .wb-fill::before,
+.wako-btn:active .wb-fill::before,
+.wako-btn:focus-visible .wb-fill::before{ transform: scaleY(1); }
 
-.case-hero__caption h1 .soft-break {
-  display: block;
-  margin-top: 0.06em;            /* tiny gap between lines */
-}
+/* color swap on hover/focus */
+.wako-btn--solid:hover,
+.wako-btn--solid:active,
+.wako-btn--solid:focus-visible{ color: var(--btn-fg-onfill); border-color: var(--btn-fill); }
+.wako-btn--ghost:hover,
+.wako-btn--ghost:active,
+.wako-btn--ghost:focus-visible{ color: var(--btn-fg-onfill); border-color: var(--btn-fill); }
 
-.case-hero__caption .subtitle {
-  margin-top: .6rem;
-  color: rgba(255,255,255,.95);
-  font-size: clamp(.95rem, 2.2vw, 1.25rem);
-  font-weight: 300;
-}
-
-/* mobile adjustments */
-@media (max-width: 640px) {
-  .case-hero__media { height: clamp(280px, 45vh, 420px); }
-  .case-hero__caption { padding: 6vh 5vw; }
-  .case-hero__caption h1 {
-    font-size: clamp(2rem, 12vw, 4.8rem);
-    line-height: 1.12;           /* extra space on small screens */
-  }
+/* focus ring */
+.wako-btn:focus-visible{
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--btn-fill) 60%, transparent);
+  border-color: var(--btn-fill);
 }
 
-/* Explainer CTA buttons (vertical on mobile, horizontal on desktop) */
-.explainer-cta {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-left: 3vw;
-  justify-content: center;
-}
-@media (min-width: 700px) {
-  .explainer-wrap {
-    flex-direction: row;
-    align-items: center;
-    gap: 4vw;
-  }
-  .explainer-cta {
-    flex-direction: column;
-    gap: 1.2rem;
-    margin-left: 4vw;
-    margin-top: 0;
-  }
+/* touch: no hover transforms, still shows active/focus fill */
+@media (hover:none), (pointer:coarse){
+  .wako-btn{ transform:none !important; }
 }
 
-/* Outline style for Figma button */
-.btn--outline {
-  background: #fff;
-  color: #1D1D1D;
-  border: 2px solid #1D1D1D;
-  box-shadow: none;
-}
-.btn--outline:hover,
-.btn--outline:focus-visible {
-  background: #1D1D1D;
-  color: #fff;
-  border-color: #1D1D1D;
+/* small lift on hover for solid variant (pointer devices only) */
+@media (hover:hover) and (pointer:fine){
+  .wako-btn--solid:hover{ transform: translateY(-1px); }
 }
 
-/* Info grid */
-.case-info {
-  margin-top: 4vw;
-  margin-bottom: 4vw;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5vw;
-  padding-top: 2vw;
-  padding-bottom: 2vw;
+/* Use WAKO layout for explainer CTA cluster */
+.explainer-cta{ display:grid; grid-auto-flow:row; gap:10px; justify-self:end; justify-items:end; }
+@media (max-width: 900px){
+  .explainer-cta{ justify-self:start; justify-items:start; display:flex; flex-wrap:wrap; gap:10px; }
 }
-.case-info__row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 2vw;
-  border-bottom: 1px solid #ececec;
-  padding: 1.2vw 0;
-}
-.case-info__row:last-child {
-  border-bottom: none;
-}
-.case-info__label {
-  min-width: 120px;
-  color: #818489;
-  font-size: .92rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-weight: 400;
-  flex: 0 0 140px;
-}
-.case-info__value {
-  color: #222;
-  font-size: 1.1rem;
+
+/* Case explainer text: smaller than homepage */
+.case-page .explainer{
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
   line-height: 1.7;
   font-weight: 400;
-  flex: 1 1 0;
 }
-.case-info__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7em;
+
+/* Enjoy More section (centered, WAKO button) */
+.enjoy-more{
+  text-align:center;
+  margin: clamp(36px, 6vw, 80px) auto 4vw;
+  max-width: 720px;
 }
-.case-info__tags span {
-  display: inline-block;
-  background: #1D1D1D;
-  color: #fff;
-  border-radius: 999px;
-  padding: .45em 1.2em;
-  font-size: .98rem;
-  font-weight: 500;
-  letter-spacing: .01em;
-}
-.case-parallax-stack {
+.enjoy-more h3{ font-size: var(--h2); font-weight: 800; margin: 0 0 .2em; color: var(--ink); letter-spacing:-.01em; }
+.enjoy-more p{ color: var(--muted); margin-bottom: 1.3em; font-size: 1.05rem; }
+.enjoy-more .wako-btn{ margin: 0 auto; }
+/* --- WAKO buttons: use portfolio grey (no blue) --- */
+.wako-btn{
+  --btn-bg: #1d1d1d;
+  --btn-fg: #ffffff;
+  --btn-border: #1d1d1d;
+  --btn-fill: #2a2a2a; /* not the same as bg → visible sweep */
+  --btn-fg-onfill: #ffffff;
+  --arrow-w: 1.25rem;
+
   position: relative;
-  width: 100%;
-  max-width: 700px;
-  margin: 8vw auto 10vw auto;
-  min-height: 80vh;
-}
-.parallax-card {
-  position: absolute;
-  left: 0; right: 0;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 700px;
-  aspect-ratio: 16/10;
-  border-radius: 24px;
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid var(--btn-border);
+  padding: 1.05rem 1.5rem; /* a bit tighter for your pages */
+  outline: none;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(30,30,60,0.10);
-  background: #fff;
-  will-change: transform, opacity;
-  pointer-events: none;
+  isolation: isolate;
+  transition: transform .18s ease, background .18s ease, color .18s ease, border .18s ease;
 }
-.parallax-card img {
+.wako-btn--solid { background: var(--btn-bg); color: var(--btn-fg); }
+.wako-btn--ghost { background: transparent; color: var(--ink); }  /* readable ghost state */
+
+/* inner grid */
+.wb-inner{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto var(--arrow-w);
+  align-items: center;
+  justify-items: center;
+  gap: .6rem;
+  z-index: 2;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+}
+.wako-btn.no-arrow .wb-inner{ grid-template-columns: 1fr auto 0; }
+.wb-label{ grid-column: 2; display:inline-flex; align-items:center; gap:.6rem; }
+.wb-arrow{ grid-column: 3; justify-self:end; opacity:0; transform:translateX(-6px);
+  transition: transform .25s ease, opacity .25s ease; pointer-events:none; }
+.wako-btn.has-arrow:hover .wb-arrow{ opacity:1; transform:translateX(0); }
+
+/* bottom fill */
+.wb-fill{ position:absolute; inset:0; z-index:1; pointer-events:none; }
+.wb-fill::before{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:100%;
+  background: var(--btn-fill);
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  transition: transform .36s cubic-bezier(.2,.8,.2,1);
+}
+.wako-btn:hover .wb-fill::before,
+.wako-btn:active .wb-fill::before,
+.wako-btn:focus-visible .wb-fill::before{ transform: scaleY(1); }
+
+/* color swap on hover/focus */
+.wako-btn--solid:hover,
+.wako-btn--solid:active,
+.wako-btn--solid:focus-visible{ color: var(--btn-fg-onfill); border-color: var(--btn-fill); }
+.wako-btn--ghost:hover,
+.wako-btn--ghost:active,
+.wako-btn--ghost:focus-visible{ color: var(--btn-fg-onfill); border-color: var(--btn-fill); }
+
+/* focus ring */
+.wako-btn:focus-visible{
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--btn-fill) 60%, transparent);
+  border-color: var(--btn-fill);
 }
 
-/* ===== Card Parallax (Chris Coyier-style) ===== */
-/* Reduce motion: static stack */
-@media (prefers-reduced-motion: reduce){
-  .cp{ margin-block: 40px; }
-  .cp__sticky{ position: relative; top: 0; height: auto; }
-  .cp__stack{ position: relative; height: auto; }
-  .cp-card{ position: relative; margin: 24px 0; transform: none !important; }
+/* touch: no hover transforms, still shows active/focus fill */
+@media (hover:none), (pointer:coarse){
+  .wako-btn{ transform:none !important; }
 }
 
-/* ===== Olivier-style Cards Parallax ===== */
-.olc { margin-block: clamp(48px, 10vh, 120px); }
-.olc__main { position: relative; }
-.olc__card-container { height: 100vh; position: relative; }
+/* small lift on hover for solid variant (pointer devices only) */
+@media (hover:hover) and (pointer:fine){
+  .wako-btn--solid:hover{ transform: translateY(-1px); }
+}
+
+/* OLC — restore sticky cards */
+.olc__main{ position: relative; }
+.olc__card-container{
+  position: relative;
+  height: 100vh;                 /* full screen per card for proper stack */
+}
 .olc__card{
   position: sticky;
   top: calc(10vh + var(--offset, 0px));
-  width: min(1100px, 92vw);
+  width: min(1100px, 100%);           /* respect .padding (5vw) on both sides */
   height: clamp(360px, 72vh, 640px);
   margin: 0 auto;
-  border-radius: 24px;
+  border-radius: var(--radius-3);
   overflow: hidden;
-  box-shadow: 0 18px 60px rgba(0,0,0,.18);
-  background: #f6f7f9;
+  box-shadow: 0 14px 48px rgba(0,0,0,.14);
+  background: var(--surface);
   transform-origin: center top;
   will-change: transform;
 }
-/* Center media inside the card */
-.olc__card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ECF0F1;
-}
-
 .olc__card img,
-.olc__card video {
-  width: 100%;
-
-  max-height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  margin: 0 auto;
+.olc__card video{
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
   background: #f4f4f4;
+  border-radius: var(--radius-3);
+}
+@media (max-width: 720px){
+  .olc__card-container{ height:auto; }
+  .olc__card{ position: relative; top: 0; height: auto; }
+}
 
-  box-shadow: none;
-  padding: 0;
+/* Back button: fully inside rounded hero */
+.case-hero__media .case-nav{
+  position: absolute;
+  top: clamp(12px, 3vw, 24px);
+  left: clamp(12px, 3vw, 24px);
+  z-index: 3;
 }
-@media (prefers-reduced-motion: reduce){
-  .olc__card { top: auto; position: relative; height: auto; }
-  .olc__card-container { height: auto; }
+.case-hero__media .case-nav .wako-btn{
+  --btn-bg: transparent; --btn-fg:#fff; --btn-border:#fff; --btn-fill:#0f0f10; --arrow-w:0;
+  padding:.55rem .9rem; font-size:.9rem; border-width:1.5px; color:#fff;
 }
-.back-arrow-btn {
-  position: fixed;
-  top: 32px;
-  left: 32px;
-  z-index: 1002;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: rgba(255,255,255,0.82);
-  border-radius: 50%;
-  box-shadow: 0 2px 16px rgba(30,30,60,0.07);
-  color: #181a1b;
-  font-size: 1.35rem;
-  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
-  border: none;
-  outline: none;
-  cursor: pointer;
+
+/* Remove the earlier blue Wako var block (dedupe) — keep a single definition */
+.wako-btn{
+  --btn-bg: #1d1d1d;         /* portfolio dark */
+  --btn-fg: #ffffff;
+  --btn-border: #1d1d1d;
+  --btn-fill: #2a2a2a;       /* visible bottom fill, no blue */
+  --btn-fg-onfill: #ffffff;
+  --arrow-w: 1.25rem;
+
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
   text-decoration: none;
+  cursor: pointer;
+  border: 2px solid var(--btn-border);
+  padding: 1.05rem 1.5rem;
+  outline: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .18s ease, background .18s ease, color .18s ease, border .18s ease;
 }
-.back-arrow-btn:hover,
-.back-arrow-btn:focus-visible {
-  background: #181a1b;
-  color: #fff;
-  box-shadow: 0 4px 24px rgba(30,30,60,0.13);
+.wako-btn--solid{ background: var(--btn-bg); color: var(--btn-fg); }
+.wako-btn--ghost{ background: transparent; color: var(--ink); }
+.wb-inner{ position: relative; display:grid; grid-template-columns: 1fr auto var(--arrow-w); align-items:center; justify-items:center; gap:.6rem; z-index:2; width:100%; }
+.wako-btn.no-arrow .wb-inner{ grid-template-columns: 1fr auto 0; }
+.wb-label{ grid-column: 2; display:inline-flex; align-items:center; gap:.6rem; }
+.wb-arrow{ grid-column:3; justify-self:end; opacity:0; transform:translateX(-6px); transition: transform .25s ease, opacity .25s ease; pointer-events:none; }
+.wako-btn.has-arrow:hover .wb-arrow{ opacity:1; transform:translateX(0); }
+.wb-fill{ position:absolute; inset:0; z-index:1; pointer-events:none; }
+.wb-fill::before{ content:""; position:absolute; left:0; right:0; bottom:0; height:100%; background: var(--btn-fill); transform-origin: bottom center; transform: scaleY(0); transition: transform .36s cubic-bezier(.2,.8,.2,1); }
+.wako-btn:hover .wb-fill::before,
+.wako-btn:active .wb-fill::before,
+.wako-btn:focus-visible .wb-fill::before{ transform: scaleY(1); }
+.wako-btn--solid:hover,
+.wako-btn--solid:active,
+.wako-btn--solid:focus-visible{ color: var(--btn-fg-onfill); border-color: var(--btn-fill); }
+.wako-btn--ghost:hover,
+.wako-btn--ghost:active,
+.wako-btn--ghost:focus-visible{ color: var(--btn-fg-onfill); border-color: var(--btn-fill); }
+.wako-btn:focus-visible{ box-shadow: 0 0 0 2px color-mix(in srgb, var(--btn-fill) 60%, transparent); border-color: var(--btn-fill); }
+@media (hover:none),(pointer:coarse){ .wako-btn{ transform:none !important; } }
+@media (hover:hover) and (pointer:fine){ .wako-btn--solid:hover{ transform: translateY(-1px); } }
+
+/* OLC sizing — keep cards inside the page padding; desktop sticky, mobile fluid */
+.olc__main{ position: relative; }
+.olc__card-container{ position: relative; height: 100vh; }
+.olc__card{
+  position: sticky;
+  top: calc(10vh + var(--offset, 0px));
+  width: min(1100px, 100%);       /* respect .padding (5vw) on both sides */
+  height: clamp(360px, 72vh, 640px);
+  margin: 0 auto;
+  border-radius: var(--radius-3);
+  overflow: hidden;
+  box-shadow: 0 14px 48px rgba(0,0,0,.14);
+  background: var(--surface);
+  transform-origin: center top;
+  will-change: transform;
 }
-@media (max-width: 700px) {
-  .back-arrow-btn {
-    top: 16px;
-    left: 16px;
-    width: 38px;
-    height: 38px;
-    font-size: 1.1rem;
-  }
-  .olc__card {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    border-radius: 18px;
-    box-sizing: border-box;
-  }
-  .olc__card img,
-  .olc__card video {
-    border-radius: 18px;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: #f4f4f4;
-  }
-}
-.enjoy-more {
-  text-align: center;
-  margin: 7vw auto 4vw auto;
-  max-width: 600px;
-}
-.enjoy-more h3 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.2em;
-  color: #181a1b;
-  letter-spacing: -0.01em;
-}
-.enjoy-more p {
-  color: #555;
-  margin-bottom: 1.5em;
-  font-size: 1.1rem;
-}
-.enjoy-more .btn {
-  font-size: 1.1rem;
-  padding-inline: 2.2em;
-}
-.btn--icon.case-nav__back {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border-radius: 50%;
-  border: 1.5px solid #1d1d1d;
-  background: transparent;
-  color: #1d1d1d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-  box-shadow: none;
-  transition: background 0.18s, color 0.18s, border 0.18s;
-}
-.btn--icon.case-nav__back:hover,
-.btn--icon.case-nav__back:focus-visible {
-  background: #1d1d1d;
-  color: #fff;
-  border-color: #1d1d1d;
+.olc__card img,.olc__card video{ width:100%; height:100%; object-fit:cover; display:block; background:#f4f4f4; border-radius: var(--radius-3); }
+@media (max-width: 720px){
+  .olc__card-container{ height:auto; }
+  .olc__card{ position: relative; top: 0; height: auto; }
 }
 
-/* sticky safety for cards section */
-.olc, .olc__main, .olc__card-container {
-  overflow: visible !important;
-
+/* Back button: fully inside rounded hero */
+.case-hero__media .case-nav{
+  position: absolute;
+  top: clamp(12px, 3vw, 24px);
+  left: clamp(12px, 3vw, 24px);
+  z-index: 3;
 }
+.case-hero__media .case-nav .wako-btn{
+  --btn-bg: transparent; --btn-fg:#fff; --btn-border:#fff; --btn-fill:#0f0f10; --arrow-w:0;
+  padding:.55rem .9rem; font-size:.9rem; border-width:1.5px; color:#fff;
+}
+
+/* Case pages: make .btn--pill use same overlay fill */
+.case-page .btn--pill{
+  color:#fff; background:#171717; border:1px solid #1d1d1d;
+  position:relative; overflow:hidden; isolation:isolate;
+  --btn-fill:#2a2a2a;
+}
+.case-page .btn--pill::after{
+  content:""; position:absolute; inset:0; z-index:0;
+  background: var(--btn-fill);
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  transition: transform .36s cubic-bezier(.2,.8,.2,1);
+}
+.case-page .btn--pill > *{ position:relative; z-index:1; }
+.case-page .btn--pill:hover::after,
+.case-page .btn--pill:focus-visible::after,
+.case-page .btn--pill:active::after{ transform: scaleY(1); }
+
+/* Stack chips: add interactive hover (same as Work page tags) */
+.case-info__tags span{
+  position:relative; overflow:hidden; cursor:default;
+  transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s, background .22s, border-color .22s, color .22s;
+}
+.case-info__tags span::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.45) 50%, transparent 100%);
+  transform: translateX(-120%); transition: transform .6s ease;
+}
+.case-info__tags span:hover,
+.case-info__tags span:focus-visible,
+.case-info__tags span:active{
+  transform: translateY(-2px) scale(1.03);
+  background: var(--brand); color:#fff; border-color: var(--brand);
+  box-shadow: 0 8px 22px rgba(30,30,60,.14);
+}
+.case-info__tags span:hover::after,
+.case-info__tags span:focus-visible::after,
+.case-info__tags span:active::after{ transform: translateX(120%); }
 
