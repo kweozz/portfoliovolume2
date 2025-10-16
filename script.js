@@ -710,34 +710,57 @@ if (window.gsap && window.ScrollTrigger) {
   }
 })();
 
-// Perf: lazy images in OLC + pause videos when offscreen
+// Perf: lazy media on homepage project grid + pause offscreen videos
 (() => {
-  const sec = document.querySelector('[data-olc-cards]');
-  if (!sec) return;
+  const grid = document.querySelector('.projects__grid');
+  if (!grid) return;
 
-  // lazy-hint for images
-  sec.querySelectorAll('img').forEach(img => {
-    img.loading = 'lazy';
+  grid.querySelectorAll('img').forEach(img => {
+    img.loading = img.loading || 'lazy';
     img.decoding = 'async';
   });
 
-  // videos: preload light, play only when in view
-  const vids = Array.from(sec.querySelectorAll('video'));
+  const vids = Array.from(grid.querySelectorAll('video'));
   vids.forEach(v => { v.preload = 'metadata'; v.muted = true; v.playsInline = true; });
 
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => {
         const v = en.target;
-        if (en.isIntersecting) {
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-        }
+        if (en.isIntersecting) v.play().catch(()=>{});
+        else v.pause();
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.5, rootMargin: '150px' });
     vids.forEach(v => io.observe(v));
   }
+})();
+
+/* Loader fade-out is already implemented; ensure hero “breathing” loop pauses offscreen */
+(() => {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  let t = 0, raf = null, running = false;
+  const step = () => {
+    if (!running) return;
+    t += 0.003;
+    hero.style.setProperty('filter', `saturate(${1.1 + Math.sin(t)*.05})`);
+    raf = requestAnimationFrame(step);
+  };
+
+  const start = () => { if (!running) { running = true; raf = requestAnimationFrame(step); } };
+  const stop  = () => { running = false; if (raf) cancelAnimationFrame(raf); };
+
+  // pause when hero not visible
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([en]) => en && (en.isIntersecting ? start() : stop()), { threshold: 0.1 });
+    io.observe(hero);
+  } else {
+    start();
+  }
+
+  // pause when tab hidden
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
 })();
 
 /* ===== Friendly loader messages (site-wide) ===== */
@@ -760,13 +783,19 @@ if (window.gsap && window.ScrollTrigger) {
     'Adding the final touch',
     'Good things take a second…'
   ];
-
-  // Show one random message
   msg.textContent = messages[Math.floor(Math.random() * messages.length)];
 
-  // Keep current hide timing
+  // Hide with fade-out, then remove from layout
+  const hide = () => {
+    loader.setAttribute('aria-busy','false');
+    loader.classList.add('hide');
+    loader.addEventListener('transitionend', () => {
+      loader.style.display = 'none';
+    }, { once: true });
+  };
+
   window.addEventListener('load', () => {
-    setTimeout(() => loader.classList.add('hide'), 750);
+    setTimeout(hide, 750);
   });
 })();
 
