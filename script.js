@@ -710,6 +710,36 @@ if (window.gsap && window.ScrollTrigger) {
   }
 })();
 
+// Perf: lazy images in OLC + pause videos when offscreen
+(() => {
+  const sec = document.querySelector('[data-olc-cards]');
+  if (!sec) return;
+
+  // lazy-hint for images
+  sec.querySelectorAll('img').forEach(img => {
+    img.loading = 'lazy';
+    img.decoding = 'async';
+  });
+
+  // videos: preload light, play only when in view
+  const vids = Array.from(sec.querySelectorAll('video'));
+  vids.forEach(v => { v.preload = 'metadata'; v.muted = true; v.playsInline = true; });
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        const v = en.target;
+        if (en.isIntersecting) {
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+    vids.forEach(v => io.observe(v));
+  }
+})();
+
 /* ===== Friendly loader messages (site-wide) ===== */
 (() => {
   const loader = document.getElementById('site-loader');

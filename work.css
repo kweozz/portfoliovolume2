@@ -456,8 +456,18 @@
 }
 .olc__card img,.olc__card video{ width:100%; height:100%; object-fit:cover; display:block; background:#f4f4f4; border-radius: var(--radius-3); }
 @media (max-width: 720px){
-  .olc__card-container{ height:auto; }
-  .olc__card{ position: relative; top: 0; height: auto; }
+  .olc__main{ display:block; }
+  .olc__card-container{
+    height:auto;
+    margin-bottom: clamp(16px, 4vw, 24px);   /* spacing between cards */
+  }
+  .olc__card{
+    position: relative;
+    top: 0;
+    height: auto;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);  /* lighter shadow on mobile */
+  }
+  .olc__card:last-child{ margin-bottom: 0; }
 }
 
 /* Back button: fully inside rounded hero */
