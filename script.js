@@ -763,39 +763,68 @@ if (window.gsap && window.ScrollTrigger) {
   document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
 })();
 
-/* ===== Friendly loader messages (site-wide) ===== */
+/* ===== On-brand Awwwards-style loader (percent + line) ===== */
 (() => {
-  const loader = document.getElementById('site-loader');
-  const glass  = loader?.querySelector('.loader-glass');
-  if (!loader || !glass || loader.dataset.msg === '1') return;
-  loader.dataset.msg = '1';
+  const root = document.getElementById('site-loader');
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = '1';
 
+  // container
+  const wrap = document.createElement('div');
+  wrap.className = 'loader-wrap';
+
+  // percent label
+  const percent = document.createElement('div');
+  percent.className = 'loader-percent';
+  percent.textContent = '0%';
+
+  // progress bar
+  const progress = document.createElement('div');
+  progress.className = 'progress';
+  const bar = document.createElement('div');
+  bar.className = 'progress__bar';
+  progress.appendChild(bar);
+
+  // microcopy
   const msg = document.createElement('div');
   msg.className = 'loader-msg';
   msg.setAttribute('aria-live', 'polite');
-  glass.appendChild(msg);
+  msg.textContent = ['Designing the moment…','Polishing pixels…','Smoothing motion…','Refining the flow…','Almost there…'][Math.floor(Math.random()*5)];
 
-  const messages = [
-    'Designing with too much coffee…',
-    'Loading creativity…',
-    'Your daily dose of design is almost ready…',
-    'Hold on tight, we\'re almost there…',
-    'Adding the final touch',
-    'Good things take a second…'
-  ];
-  msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+  wrap.append(percent, progress, msg);
+  root.appendChild(wrap);
 
-  // Hide with fade-out, then remove from layout
-  const hide = () => {
-    loader.setAttribute('aria-busy','false');
-    loader.classList.add('hide');
-    loader.addEventListener('transitionend', () => {
-      loader.style.display = 'none';
-    }, { once: true });
-  };
+  // animate to ~90% while loading
+  let current = 0, target = 90, done = false;
+  (function tick(){
+    if (done) return;
+    current += (target - current) * 0.08 + 0.4;
+    if (current > target) current = target;
+    bar.style.width = current.toFixed(2) + '%';
+    percent.textContent = Math.round(current) + '%';
+    requestAnimationFrame(tick);
+  })();
 
+  // complete on window load, fade out, then remove
   window.addEventListener('load', () => {
-    setTimeout(hide, 750);
+    done = true;
+    let x = current;
+    (function finish(){
+      x += (100 - x) * 0.2 + 1;
+      if (x >= 99.6) {
+        bar.style.width = '100%';
+        percent.textContent = '100%';
+        setTimeout(() => {
+          root.setAttribute('aria-busy','false');
+          root.classList.add('hide');
+          root.addEventListener('transitionend', () => { root.style.display = 'none'; }, { once:true });
+        }, 350);
+      } else {
+        bar.style.width = x.toFixed(2) + '%';
+        percent.textContent = Math.round(x) + '%';
+        requestAnimationFrame(finish);
+      }
+    })();
   });
 })();
 

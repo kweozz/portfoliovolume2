@@ -1431,147 +1431,29 @@ h1 {
   }
 }
 
-/* === Glass Loader (on-brand lines) === */
-/* Loader overlay: full-screen + fade-out */
+@media (prefers-color-scheme:dark){
+  :root{ --ink:#eef2f7; --backdrop:rgba(12,14,18,.55); --track:rgba(255,255,255,.12); --bar:#fff; }
+}
+
+/* Loader theme (light) */
+:root{
+  --backdrop: rgba(255,255,255,.86);   /* clean white glass instead of grey */
+  --track: rgba(0,0,0,.06);
+  --bar: #1d1d1d;
+}
+
+/* Loader overlay */
 .site-loader{
-  position: fixed;           /* was not fixed → stuck at top */
-  inset: 0;
-  z-index: 2500;             /* above page-transition (2000) */
-  display: grid;
-  place-items: center;
-  padding: 5vw;
-  background: rgba(245,246,248,.75);
+  position:fixed; inset:0; z-index:2500;
+  display:grid; place-items:center;
+  background: var(--backdrop);         /* now resolves to white glass */
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition: opacity .35s ease, visibility 0s linear .35s;
+  transition:opacity .35s ease, visibility 0s linear .35s;
 }
-.site-loader.hide{
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
+.site-loader.hide{ opacity:0; visibility:hidden; pointer-events:none; }
 
-/* keep the glass card styling */
-.loader-glass{
-  background: rgba(255,255,255,.9);
-  border-radius: 28px;
-  padding: 32px 36px;
-  box-shadow: 0 8px 48px rgba(30,30,60,.13);
-  display:flex; flex-direction:column; align-items:center; gap:16px;
-}
-.loader-spinner{ display:none; } /* hide old spinner */
-
-.loader-title{
-  display:flex; align-items:center; gap:.5rem;
-  font: 600 1rem/1 Inter, system-ui, sans-serif;
-  color:#1D1D1D; letter-spacing:.02em;
-}
-.loader-title .dot{ opacity:.5; }
-
-.loader-lines{ width:min(360px, 72vw); display:flex; flex-direction:column; gap:10px; }
-.loader-line{
-  position:relative; height:2px; border-radius:12px; overflow:hidden;
-  background:#d9dadc;
-}
-.loader-line::after{
-  content:""; position:absolute; inset:0 auto 0 0; width:100%; background:#1D1D1D;
-  transform-origin:left center; transform:scaleX(0);
-  animation: loaderLine 1.2s cubic-bezier(.7,0,.2,1) infinite;
-}
-.loader-line:nth-child(2)::after{ animation-delay:.12s; opacity:.9; }
-.loader-line:nth-child(3)::after{ animation-delay:.24s; opacity:.8; }
-
-@keyframes loaderLine{
-  0%   { transform:scaleX(0); }
-  60%  { transform:scaleX(1); }
-  100% { transform:scaleX(1); }
-}
-
-/* loader message below lines */
-.loader-msg{
-  font: 500 .95rem/1.3 Inter, system-ui, sans-serif;
-  color:#1D1D1D; letter-spacing:.01em;
-  animation: loaderMsgPulse .9s ease-in-out infinite alternate;
-}
-
-@keyframes loaderMsgPulse {
-  from {
-    opacity: .65;
-    transform: translateY(1px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive footer layout */
-@media (max-width: 900px) {
-  .footer__row {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    padding-block: 3rem;
-    text-align: left;
-  }
-
-  .footer__cta {
-    justify-self: start;
-    margin-top: 1.5rem;
-  }
-
-  .footer__title {
-    font-size: 2.2rem;
-  }
-
-  .footer__note {
-    justify-content: flex-start;
-    font-size: 1rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer__copy {
-    justify-content: flex-start;
-    font-size: .95rem;
-    flex-wrap: wrap;
-    gap: .5rem;
-  }
-}
-
-/* Zorg dat de LinkedIn knop niet over content heen valt op mobiel */
-@media (max-width: 700px) {
-  .footer-linkedin {
-    margin-top: 1.5rem;
-    margin-left: 0;
-    left: unset;
-    bottom: unset;
-    display: inline-flex;
-  }
-}
-
-
-.card--brains .media {
-  max-height: 420px;
-  /* cap height */
-  padding: 12px;
-  /* slightly tighter padding */
-}
-
-.card--brains .media img,
-.card--brains .media video {
-  object-fit: contain;
-  /* avoid cropping at smaller height */
-  background-color: #ECF1F2;
-}
-
-/* Disable magnetic transforms on touch */
-@media (hover: none),
-(pointer: coarse) {
-  .btn {
-    transform: none !important;
-  }
+/* Fallback when backdrop-filter isn’t supported (avoid muddy grey) */
+@supports not ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))){
+  .site-loader{ background:#ffffff; }  /* plain white */
 }
