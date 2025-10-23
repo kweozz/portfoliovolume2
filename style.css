@@ -1483,3 +1483,14 @@ h1 {
 }
 @keyframes shimmer{ from{transform:translateX(-100%)} to{transform:translateX(250%)} }
 .loader-msg{ font-weight:500; font-size:.95rem; opacity:.85; letter-spacing:.01em; }
+
+/* Work grid helpers */
+.tag--new{ background:#1d1d1d; color:#fff; border-color:#1d1d1d; }
+
+@media (min-width:681px){
+  /* Half cards: two-up row */
+  .projects__grid .card--half{ grid-column: span 6; }
+  .projects__grid .card--half .media{ aspect-ratio: 16/9; }
+}
+
+/* Physio first card reuses the B-slot footprint, no extra rules needed */

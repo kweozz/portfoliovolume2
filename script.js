@@ -823,24 +823,29 @@ if (window.gsap && window.ScrollTrigger) {
   });
 })();
 
-/* ===== Case pages: dynamic Next Project (loops all projects) ===== */
+/* ===== Case pages: dynamic Next Project (matches homepage order) ===== */
 (() => {
   if (!document.body.classList.contains('case-page')) return;
 
+  // DOM order on index: Physio → FYNK → SWEAR → Respire → Hoppin → Brains → Blender
   const order = [
+    'project-physio.html',
     'project-fynk.html',
-    'project-blender.html',
     'project-swear.html',
     'project-respire.html',
     'project-hoppin.html',
-    'project-brainscoffee.html'
+    'project-brainscoffee.html',
+    'project-blender.html'
   ].map(s => s.toLowerCase());
 
   const current = location.pathname.split('/').pop().toLowerCase();
   const i = order.indexOf(current);
-  if (i < 0) return;
+  if (i === -1) return;
 
   const nextHref = order[(i + 1) % order.length];
-  const nextBtn = document.getElementById('nextProjectLink');
+
+  // Update button/link if present
+  const nextBtn = document.getElementById('nextProjectLink') ||
+                  document.querySelector('.enjoy-more a[href]');
   if (nextBtn) nextBtn.href = nextHref;
 })();
