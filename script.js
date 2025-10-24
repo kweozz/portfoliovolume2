@@ -640,7 +640,6 @@ if (window.gsap && window.ScrollTrigger) {
   const cards = Array.from(section.querySelectorAll('.olc__card'));
   if (!cards.length) return;
 
-  // Desktop: sticky stack + smooth scale (existing behavior)
   if (isDesktop && !prefersReduced) {
     cards.forEach((card, i) => {
       card.style.setProperty('--offset', `${i * 25}px`);
@@ -648,8 +647,12 @@ if (window.gsap && window.ScrollTrigger) {
     });
 
     let start = 0, end = 1;
+    const DPR = window.devicePixelRatio || 1;
+    const MIN_SCALE = DPR > 1.25 ? 0.992 : 1;      // op retina kleine scale toegestaan, anders geen scale
+    const STEP      = DPR > 1.25 ? 0.03  : 0;      // minder stacking-blur
     const clamp01 = v => Math.max(0, Math.min(1, v));
     const map = (v, a, b, c, d) => c + (d - c) * (Math.max(0, Math.min(1, (v - a) / Math.max(1e-6, b - a))));
+    const snap = v => Math.round(v * DPR * 1000) / (DPR * 1000);  // snap op DPR → minder resample-blur
 
     const measure = () => {
       const r = main.getBoundingClientRect();
@@ -666,11 +669,12 @@ if (window.gsap && window.ScrollTrigger) {
 
       cards.forEach((card, i) => {
         const n = cards.length;
-        const targetScale = 1 - (n - i) * 0.05;
+        const targetScale = Math.max(MIN_SCALE, 1 - (n - i) * STEP);
         const rangeStart  = i / n;
         const s = (smooth <= rangeStart) ? 1 : map(smooth, rangeStart, 1, 1, targetScale);
-        const fade = s < 0.92 ? map(s, targetScale, 0.92, 0, 1) : 1;
-        card.style.transform = `scale(${s})`;
+        const sSnap = snap(s);
+        const fade = sSnap < 0.995 ? map(sSnap, targetScale, 0.995, 0, 1) : 1;
+        card.style.transform = `scale3d(${sSnap},${sSnap},1)`;   // 3D scale + snapped
         card.style.opacity = fade;
       });
 
@@ -848,4 +852,61 @@ if (window.gsap && window.ScrollTrigger) {
   const nextBtn = document.getElementById('nextProjectLink') ||
                   document.querySelector('.enjoy-more a[href]');
   if (nextBtn) nextBtn.href = nextHref;
+})();
+
+// OLC cards — smooth stack: translateY + tiny scale (snap op DPR) + fade
+(() => {
+  const section = document.querySelector('[data-olc-cards]');
+  if (!section) return;
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const desktop = matchMedia('(hover:hover) and (pointer:fine)').matches && innerWidth > 820;
+  if (!desktop || reduced) return;
+
+  const main  = section.querySelector('.olc__main');
+  const cards = Array.from(section.querySelectorAll('.olc__card'));
+  if (!cards.length || !main) return;
+
+  // z-index en offsets
+  cards.forEach((card, i) => {
+    card.style.setProperty('--offset', `${i * 24}px`);
+    card.style.zIndex = String(100 + (cards.length - i));
+  });
+
+  const DPR = devicePixelRatio || 1;
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+  const snap = v => Math.round(v * DPR * 1000) / (DPR * 1000);
+
+  let start = 0, end = 1;
+  const measure = () => {
+    const r = main.getBoundingClientRect();
+    const y = scrollY || pageYOffset;
+    start = r.top + y;
+    end   = start + main.offsetHeight - innerHeight;
+  };
+
+  let target = 0, smooth = 0;
+  const tick = () => {
+    const y = scrollY || pageYOffset;
+    target = clamp01((y - start) / Math.max(1, end - start));
+    smooth += (target - smooth) * 0.13;
+
+    const step = 1 / cards.length;
+    cards.forEach((card, i) => {
+      const from   = i * step;
+      const local  = clamp01((smooth - from) / step); // 0..1 per kaart
+      const ty     = -local * 28;                     // zachte verticale glide
+      const sc     = snap(1 - local * 0.004);         // max 0.4% scale → geen blur
+      const op     = 1 - local * 0.15;
+
+      card.style.transform = `translateY(${ty}px) scale(${sc})`;
+      card.style.opacity   = op;
+    });
+
+    requestAnimationFrame(tick);
+  };
+
+  measure();
+  requestAnimationFrame(tick);
+  addEventListener('resize', measure, { passive: true });
 })();
